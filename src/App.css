@@ -1,0 +1,100 @@
+/* Smooth theme transition */
+body,
+header,
+section,
+footer,
+nav,
+a,
+button,
+.glass,
+.project-card,
+.skill-pill {
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease;
+}
+
+/* Theme variables */
+body[data-theme="light"] {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --border: #e4e4e7;
+  --text: #18181b;
+  --muted: #71717a;
+}
+
+body[data-theme="dark"] {
+  --bg: #09090b;
+  --surface: #111114;
+  --border: rgba(255,255,255,.09);
+  --text: #f4f4f5;
+  --muted: #92929d;
+}
+
+/* Section themes */
+section[data-theme="light"] {
+  background: #f5f5f7 !important;
+  color: #18181b !important;
+}
+
+section[data-theme="dark"] {
+  background: #09090b !important;
+  color: #f4f4f5 !important;
+}
+
+/* Light text */
+section[data-theme="light"] h1,
+section[data-theme="light"] h2,
+section[data-theme="light"] h3,
+section[data-theme="light"] h4,
+section[data-theme="light"] p {
+  color: #18181b !important;
+}
+
+section[data-theme="light"] .text-white {
+  color: #18181b !important;
+}
+
+section[data-theme="light"] .text-zinc-200,
+section[data-theme="light"] .text-zinc-300,
+section[data-theme="light"] .text-zinc-400,
+section[data-theme="light"] .text-zinc-500,
+section[data-theme="light"] .text-zinc-600 {
+  color: #71717a !important;
+}
+
+/* Cards */
+section[data-theme="light"] .glass,
+section[data-theme="light"] .project-card {
+  background: #ffffff !important;
+  border-color: #e4e4e7 !important;
+}
+
+/* Skill pills */
+section[data-theme="light"] .skill-pill {
+  color: #3f3f46;
+  background: #f4f4f5;
+  border-color: #e4e4e7;
+}
+
+/* Navbar */
+body[data-theme="light"] header {
+  background: rgba(255,255,255,.95) !important;
+  color: #18181b !important;
+  border-color: #e4e4e7 !important;
+}
+
+body[data-theme="dark"] header {
+  background: rgba(9,9,11,.95) !important;
+  color: #f4f4f5 !important;
+  border-color: rgba(255,255,255,.09) !important;
+}
+
+body[data-theme="light"] header a {
+  color: #18181b !important;
+}
+
+body[data-theme="dark"] header a {
+  color: #f4f4f5 !important;
+}

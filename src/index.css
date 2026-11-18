@@ -1,0 +1,178 @@
+/* =========================================
+   0. SECTION SCROLL SNAP & OVERFLOW PROTECTION
+   ========================================= */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: auto; /* ป้องกันเนื้อหาโดนตัดเมื่อยาวเกินหน้าจอ */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 6rem;
+  padding-bottom: 5rem;
+}
+
+footer {
+  scroll-snap-align: end;
+}
+
+/* =========================================
+   1. SMOOTH THEME & HOVER TRANSITIONS
+   ========================================= */
+body,
+header,
+section,
+footer,
+nav,
+h1, h2, h3, h4, p,
+.mono,
+.nav-link,
+.project-card,
+.glass,
+.skill-pill,
+.btn-secondary,
+.timeline-line {
+  /* ใช้เวลาเท่ากันทั้งหมดที่ 0.45s และใช้ cubic-bezier เพื่อให้สมูทไม่กระตุก */
+  transition:
+    background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =========================================
+   2. LIGHT THEME (Upgraded Creative & Depth)
+   ========================================= */
+section.light-theme {
+  /* พื้นหลังสีขาวอมเทา/ม่วงจางๆ มีมิติแสงด้านบน */
+  background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f4f4f8 100%) !important;
+  background-color: #f4f4f8 !important;
+  color: #18181b;
+}
+
+section.light-theme h1,
+section.light-theme h2,
+section.light-theme h3,
+section.light-theme h4,
+section.light-theme p {
+  color: #18181b;
+}
+
+section.light-theme .text-zinc-400,
+section.light-theme .text-zinc-500,
+section.light-theme .text-zinc-600 {
+  color: #52525b; /* ปรับให้อ่านง่ายและคมชัดขึ้นบนพื้นขาว */
+}
+
+section.light-theme .mono {
+  color: #6d28d9;
+  font-weight: 500;
+}
+
+/* การ์ดแบบกระจกโปร่งแสง + เงาฟุ้งมีมิติ */
+section.light-theme .glass,
+section.light-theme .project-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 10px 30px -5px rgba(24, 24, 27, 0.05),
+    0 4px 12px -2px rgba(24, 24, 27, 0.03),
+    inset 0 0 0 1px rgba(24, 24, 27, 0.04);
+}
+
+/* ลูกเล่นเวลาเอาเมาส์ชี้ที่การ์ดในธีมขาว (ลอยขึ้น + ขอบเรืองแสงสีม่วงอ่อน) */
+section.light-theme .project-card:hover,
+section.light-theme .glass:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: 
+    0 20px 40px -10px rgba(124, 58, 237, 0.1),
+    0 8px 16px -4px rgba(24, 24, 27, 0.04);
+  transform: translateY(-4px);
+}
+
+/* ป้าย Skill Pill ดูนูนและมีลูกเล่นตอนชี้ */
+section.light-theme .skill-pill {
+  color: #3f3f46;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+section.light-theme .skill-pill:hover {
+  color: #6d28d9;
+  border-color: #c4b5fd;
+  background: #f5f3ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.12);
+}
+
+section.light-theme .nav-link {
+  color: #71717a;
+}
+
+section.light-theme .nav-link:hover,
+section.light-theme .nav-link.active {
+  color: #18181b;
+}
+
+section.light-theme .btn-secondary {
+  color: #18181b;
+  background: #ffffff;
+  border-color: #d4d4d8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+section.light-theme .btn-secondary:hover {
+  background: #f4f4f5;
+  border-color: #a1a1aa;
+}
+
+/* เส้น Timeline ไล่สีให้ดูไม่แข็งทื่อ */
+section.light-theme .timeline-line {
+  background: linear-gradient(to bottom, #d4d4d8, #a855f7, #d4d4d8);
+}
+
+/* =========================================
+   3. DARK THEME
+   ========================================= */
+section.dark-theme {
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+/* =========================================
+   4. NAVBAR THEME (Frosted Glass)
+   ========================================= */
+header.nav-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(228, 228, 231, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+header.nav-light .nav-link {
+  color: #71717a;
+}
+
+header.nav-light .nav-link:hover,
+header.nav-light .nav-link.active {
+  color: #18181b;
+}
+
+header.nav-light .font-semibold {
+  color: #18181b;
+}

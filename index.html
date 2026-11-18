@@ -1,0 +1,2804 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Piyathanee Srithong — Frontend Developer & UX/UI Designer</title>
+  <meta name="description" content="Portfolio of Piyathanee Srithong, a Frontend Developer and UX/UI Designer passionate about building web and mobile applications." />
+  <meta name="theme-color" content="#09090b" />
+  <meta property="og:title" content="Piyathanee Srithong — Frontend Developer & UX/UI Designer" />
+  <meta property="og:description" content="Building apps & websites with thoughtful UX/UI." />
+  <meta property="og:type" content="website" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#09090b',
+            panel: '#111114',
+            muted: '#92929d',
+            accent: '#b026ff',
+            cyan: '#00f0ff',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #07070a;
+      --surface: #0f0f14;
+      --border: rgba(255,255,255,.09);
+      --accent: #b026ff;
+      --accent-cyan: #00f0ff;
+      --text: #f4f4f5;
+      --muted: #92929d;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    /* ======================================
+       SCROLL SNAP & OVERFLOW PROTECTION
+       ====================================== */
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      overflow-x: clip;
+    }
+
+    main > section {
+      min-height: 100vh;
+      min-height: 100dvh;
+      height: auto; /* Overflow protection: ขยายตามเนื้อหาที่ยาวเกินหน้าจอ ไม่ตัดทอน */
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 6rem;    /* เว้นระยะไม่ให้ชน Navbar ด้านบน */
+      padding-bottom: 5rem; /* เว้นระยะด้านล่างเมื่อเนื้อหายาว */
+    }
+
+    @media (min-width: 1024px) {
+      #home, #about, #skills, #contact {
+        height: 100dvh;
+        overflow: hidden;
+        padding-top: 4.5rem;
+        padding-bottom: 2rem;
+      }
+    }
+
+    footer {
+      scroll-snap-align: end;
+    }
+
+    ::selection {
+      background: #b026ff;
+      color: #ffffff;
+    }
+
+    .mono { font-family: 'DM Mono', monospace; }
+
+    .container-main {
+      width: min(1120px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* Linear text gradient (neon electric purple -> bright cyan) on all main H1 headings */
+    h1,
+    .gradient-text {
+      background: linear-gradient(110deg, #b026ff 0%, #d946ef 42%, #00f0ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Replace muted pastel lilac utility accents in dark sections with neon electric purple */
+    section[data-theme="dark"] .text-violet-300,
+    header:not(.nav-light) .text-violet-300 {
+      color: #c84bff !important;
+      text-shadow: 0 0 18px rgba(176, 38, 255, 0.35);
+    }
+
+    header:not(.nav-light) .bg-violet-400 {
+      background: linear-gradient(135deg, #b026ff, #00f0ff) !important;
+      color: #07070a !important;
+      box-shadow: 0 0 20px rgba(176, 38, 255, 0.45);
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(176,38,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,.035) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .hero-glow {
+      background:
+        radial-gradient(ellipse at 75% 30%, rgba(176,38,255,.18), transparent 48%),
+        radial-gradient(ellipse at 15% 75%, rgba(0,240,255,.10), transparent 42%);
+    }
+
+    .glass {
+      background: rgba(255,255,255,.025);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-link {
+      color: #a1a1aa;
+      transition: color .25s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active { color: white; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #b026ff 0%, #8b1eff 55%, #00d2ff 130%);
+      color: #ffffff;
+      box-shadow: 0 6px 24px -4px rgba(176, 38, 255, 0.45);
+      transition: transform .3s var(--ease), background .3s ease, box-shadow .35s var(--ease);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #c44dff 0%, #9d34ff 45%, #00f0ff 125%);
+      transform: translateY(-3px);
+      box-shadow:
+        0 12px 42px -4px rgba(176, 38, 255, 0.68),
+        0 0 65px -6px rgba(0, 240, 255, 0.42);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(176, 38, 255, 0.32);
+      transition: transform .25s var(--ease), background-color .25s ease, border-color .25s ease, box-shadow .3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(176, 38, 255, 0.08);
+      border-color: rgba(0, 240, 255, 0.55);
+      box-shadow: 0 8px 32px -6px rgba(176, 38, 255, 0.32);
+      transform: translateY(-3px);
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: transform .35s var(--ease), border-color .35s ease, box-shadow .4s var(--ease);
+    }
+
+    .project-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(176, 38, 255, 0.65);
+      box-shadow:
+        0 22px 60px -10px rgba(176, 38, 255, 0.38),
+        0 0 50px -12px rgba(0, 240, 255, 0.25);
+    }
+
+    .project-visual {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      background: #18181b;
+    }
+
+    .project-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 55%, rgba(9,9,11,.3));
+      pointer-events: none;
+    }
+
+    .skill-pill {
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.08);
+      color: #d4d4d8;
+      transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .25s ease;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--accent);
+      color: white;
+      background: rgba(176, 38, 255, 0.14);
+      box-shadow: 0 0 22px rgba(176, 38, 255, 0.32);
+    }
+
+    /* ======================================
+       BENTO BOX UI & BRAND-COLOR TOOL ICONS
+       ====================================== */
+    .bento-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      transition:
+        transform .4s var(--ease),
+        border-color .35s ease,
+        box-shadow .4s var(--ease),
+        background-color .35s ease;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(176, 38, 255, 0.42);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 20px 50px -12px rgba(176, 38, 255, 0.25),
+        0 0 38px -12px rgba(0, 240, 255, 0.18);
+    }
+
+    .tool-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      color: #a1a1aa;
+      font-size: 12px;
+      font-weight: 500;
+      transition:
+        color .3s ease,
+        border-color .3s ease,
+        background-color .3s ease,
+        transform .3s var(--ease),
+        box-shadow .3s ease;
+    }
+
+    .tool-chip svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: #71717a; /* Monochrome default */
+      fill: currentColor;
+      transition:
+        color .35s ease,
+        filter .35s ease,
+        transform .35s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    .tool-chip:hover {
+      color: #f4f4f5;
+      background: rgba(255, 255, 255, 0.065);
+      border-color: color-mix(in srgb, var(--brand, #b026ff) 55%, rgba(255,255,255,0.12));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px -4px color-mix(in srgb, var(--brand, #b026ff) 38%, transparent);
+    }
+
+    .tool-chip:hover svg {
+      color: var(--brand, #00f0ff);
+      filter: drop-shadow(0 0 8px color-mix(in srgb, var(--brand, #00f0ff) 65%, transparent));
+      transform: scale(1.14);
+    }
+
+    /* Subtle brand awakening when hovering the parent bento cell */
+    .bento-card:hover .tool-chip svg {
+      color: color-mix(in srgb, var(--brand, #a1a1aa) 75%, #a1a1aa);
+    }
+    .bento-card:hover .tool-chip:hover svg {
+      color: var(--brand, #00f0ff);
+    }
+
+    .filter-btn {
+      border: 1px solid transparent;
+      color: #92929d;
+      transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .25s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      color: white;
+      border-color: rgba(176, 38, 255, 0.55);
+      background: rgba(176, 38, 255, 0.14);
+      box-shadow: 0 0 24px rgba(176, 38, 255, 0.25);
+    }
+
+    /* ======================================
+       EDUCATION TIMELINE & ACTIVITY CARDS
+       ====================================== */
+    .edu-timeline {
+      position: relative;
+      padding-left: 2.25rem; /* 36px clearance so glowing dots never overlap text */
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 7px;
+      width: 2px;
+      background: linear-gradient(
+        to bottom,
+        rgba(176, 38, 255, 0.85) 0%,
+        rgba(0, 240, 255, 0.55) 65%,
+        rgba(255, 255, 255, 0.08) 100%
+      );
+      border-radius: 999px;
+    }
+
+    .timeline-item {
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.25rem; /* aligns center of 16px dot over the 2px line at left: 7px */
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid #09090d;
+      box-shadow:
+        0 0 0 4px rgba(176, 38, 255, 0.18),
+        0 0 18px rgba(176, 38, 255, 0.85),
+        0 0 30px rgba(0, 240, 255, 0.45);
+      z-index: 2;
+    }
+
+    .timeline-dot-secondary {
+      background: #00f0ff;
+      box-shadow:
+        0 0 0 4px rgba(0, 240, 255, 0.16),
+        0 0 16px rgba(0, 240, 255, 0.75);
+    }
+
+    .activity-card {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      padding: 1.1rem 1.15rem;
+      border-radius: 18px;
+      background: rgba(15, 15, 22, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition:
+        transform .35s var(--ease),
+        border-color .3s ease,
+        background-color .3s ease,
+        box-shadow .35s var(--ease);
+    }
+
+    .activity-card:hover {
+      transform: translateY(-4px);
+      background: rgba(22, 18, 34, 0.88);
+      border-color: rgba(176, 38, 255, 0.52);
+      box-shadow:
+        0 14px 36px -10px rgba(176, 38, 255, 0.34),
+        0 0 28px -8px rgba(0, 240, 255, 0.2);
+    }
+
+    .activity-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      background: rgba(176, 38, 255, 0.12);
+      border: 1px solid rgba(176, 38, 255, 0.32);
+      color: #d86eff;
+      transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, color .3s ease, border-color .3s ease;
+    }
+
+    .activity-card:hover .activity-icon {
+      transform: scale(1.08) rotate(-3deg);
+      color: #00f0ff;
+      border-color: rgba(0, 240, 255, 0.55);
+      box-shadow: 0 0 18px rgba(176, 38, 255, 0.45);
+    }
+
+    .activity-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #a1a1aa;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translate3d(0, 26px, 0);
+      transition:
+        opacity .85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform .85s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .orb {
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    .modal-backdrop {
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(12px);
+    }
+
+    .modal-content {
+      animation: modalIn .25s ease-out;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(15px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 640px) {
+      .container-main { width: min(100% - 36px, 1120px); }
+      .project-visual { min-height: 180px; }
+    }
+
+    /* ======================================
+       DUAL-PERSONA PORTRAIT (Split-Screen Cursor Wipe)
+       ====================================== */
+    #home {
+      --hero-split: 0.5;
+    }
+
+    .hero-glow {
+      background:
+        radial-gradient(
+          ellipse at 72% 38%,
+          rgba(0, 240, 255, calc(0.24 * var(--hero-split) + 0.05)),
+          transparent 48%
+        ),
+        radial-gradient(
+          ellipse at 80% 48%,
+          rgba(255, 42, 133, calc(0.24 * (1 - var(--hero-split)) + 0.04)),
+          transparent 46%
+        ),
+        radial-gradient(ellipse at 15% 75%, rgba(176, 38, 255, .10), transparent 40%);
+      transition: background 0.15s ease-out;
+    }
+
+    .dual-persona-card {
+      --split: 50%;
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 460px;
+      border-radius: 28px;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+      cursor: ew-resize;
+      box-shadow:
+        0 28px 80px -20px rgba(0, 0, 0, 0.88),
+        -12px 0 55px -15px rgba(0, 240, 255, 0.35),
+        12px 0 55px -15px rgba(255, 42, 133, 0.35);
+    }
+
+    @media (max-width: 480px) {
+      .dual-persona-card {
+        height: 410px;
+      }
+    }
+
+    .persona-layer {
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+
+    /* Bottom/Left Layer: THE CODER / BUILDER (Cool High-Tech Cyan Lighting) */
+    .persona-builder {
+      background:
+        radial-gradient(circle at 24% 25%, rgba(0, 240, 255, 0.38), transparent 55%),
+        radial-gradient(circle at 75% 85%, rgba(14, 165, 233, 0.22), transparent 50%),
+        #05080f;
+    }
+
+    .builder-wireframe {
+      background-image:
+        linear-gradient(rgba(0, 240, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.10) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse at 50% 45%, black 35%, transparent 88%);
+    }
+
+    /* Top/Right Layer: THE DESIGNER / CREATOR (Warm Neon Magenta & Peach Lighting) */
+    .persona-creator {
+      clip-path: inset(0 0 0 var(--split, 50%));
+      will-change: clip-path;
+      background:
+        radial-gradient(circle at 78% 24%, rgba(255, 42, 133, 0.38), transparent 52%),
+        radial-gradient(circle at 70% 72%, rgba(255, 138, 91, 0.30), transparent 52%),
+        radial-gradient(circle at 30% 65%, rgba(176, 38, 255, 0.26), transparent 55%),
+        #0e060c;
+    }
+
+    /* Identical portrait positioning so both layers align pixel-perfectly */
+    .persona-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .persona-builder .persona-img {
+      filter: contrast(1.1) brightness(0.97) saturate(1.08)
+              drop-shadow(-4px 0 26px rgba(0, 240, 255, 0.65));
+    }
+
+    .persona-creator .persona-img {
+      filter: contrast(1.08) brightness(1.03) saturate(1.22)
+              drop-shadow(4px 0 26px rgba(255, 42, 133, 0.62))
+              drop-shadow(0 0 22px rgba(255, 138, 91, 0.45));
+    }
+
+    /* Fallback avatar silhouette (hidden automatically if profile.jpg loads) */
+    .persona-silhouette {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* Figma-style corner bounding box handles */
+    .figma-box {
+      position: absolute;
+      inset: 14px;
+      border: 1px dashed rgba(0, 240, 255, 0.42);
+      border-radius: 18px;
+      pointer-events: none;
+    }
+
+    .figma-handle {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #05080f;
+      border: 1.5px solid #00f0ff;
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.85);
+    }
+
+    /* Floating persona badges */
+    .persona-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      white-space: nowrap;
+      box-shadow: 0 10px 25px -6px rgba(0, 0, 0, 0.65);
+    }
+
+    .persona-badge-builder {
+      background: rgba(6, 16, 26, 0.84);
+      border: 1px solid rgba(0, 240, 255, 0.55);
+      color: #cffafe;
+      box-shadow: 0 10px 25px -6px rgba(0, 0, 0, 0.65), 0 0 18px rgba(0, 240, 255, 0.28);
+    }
+
+    .persona-badge-creator {
+      background: rgba(24, 8, 18, 0.84);
+      border: 1px solid rgba(255, 77, 158, 0.55);
+      color: #ffe4e6;
+      box-shadow: 0 10px 25px -6px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 42, 133, 0.28);
+    }
+
+    /* Asynchronous Zero-Gravity Floating Animation for Hero Skill Tags */
+    @keyframes zeroGravityA {
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(0deg); }
+      33%      { transform: translate3d(2px, -8px, 0) rotate(-1.2deg); }
+      66%      { transform: translate3d(-2px, 4px, 0) rotate(0.8deg); }
+    }
+
+    @keyframes zeroGravityB {
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(0deg); }
+      40%      { transform: translate3d(-3px, -10px, 0) rotate(1.4deg); }
+      75%      { transform: translate3d(2px, 5px, 0) rotate(-0.9deg); }
+    }
+
+    .persona-badge {
+      will-change: transform;
+      animation: zeroGravityA var(--float-dur, 4.6s) ease-in-out var(--float-delay, 0s) infinite;
+    }
+
+    .persona-badge-creator {
+      animation-name: zeroGravityB;
+    }
+
+    .stat-number {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+    }
+
+    /* Split Divider Line & Handle */
+    .split-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--split, 50%);
+      width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(
+        to bottom,
+        transparent 2%,
+        rgba(176, 38, 255, 0.95) 25%,
+        #ffffff 50%,
+        rgba(0, 240, 255, 0.95) 75%,
+        transparent 98%
+      );
+      box-shadow:
+        0 0 18px rgba(176, 38, 255, 0.9),
+        0 0 28px rgba(0, 240, 255, 0.75);
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .split-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: rgba(10, 10, 18, 0.9);
+      border: 1.5px solid rgba(0, 240, 255, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow:
+        0 0 0 4px rgba(176, 38, 255, 0.25),
+        0 0 22px rgba(0, 240, 255, 0.45),
+        0 8px 25px rgba(0, 0, 0, 0.6);
+      transition: transform 0.25s cubic-bezier(.34, 1.56, .64, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .dual-persona-card:hover .split-knob {
+      transform: translate(-50%, -50%) scale(1.1);
+      border-color: #00f0ff;
+      box-shadow:
+        0 0 0 5px rgba(176, 38, 255, 0.35),
+        0 0 32px rgba(0, 240, 255, 0.75);
+    }
+
+    /* ======================================
+       LIGHT THEME "Ivory & Violet" — sections 2 (About) & 4 (Projects)
+       Sections 1, 3, 5, 6 keep the original dark theme.
+       No pure #FFF / #000 — warm ivory surfaces + deep ink text.
+       ====================================== */
+    section[data-theme="light"],
+    header.nav-light {
+      /* Surfaces */
+      --bg:              #F6F4EF;
+      --bg-alt:          #EFEBE3;
+      --surface:         #FBFAF6;
+      --surface-raised:  #FEFDFA;
+      --glass-bg:        rgb(251 250 246 / .58);
+      --glass-border:    rgb(255 253 248 / .75);
+      --glass-highlight: rgb(255 253 248 / .90);
+      /* Lines */
+      --border:          #E4DFD5;
+      --border-strong:   #D3CCBF;
+      /* Text */
+      --text:            #1D1B24;
+      --text-2:          #46434F;
+      --muted:           #6E6A78;
+      /* Accent */
+      --accent:          #6D3FE0;
+      --accent-hover:    #5A2FC7;
+      --accent-soft:     #ECE6FB;
+      --accent-2:        #E0663A;
+      /* Shadows — ink-tinted, layered (contact + ambient) */
+      --shadow-rgb: 29 27 36;
+      --shadow-xs: 0 1px 2px rgb(var(--shadow-rgb) / .06);
+      --shadow-sm: 0 1px 2px rgb(var(--shadow-rgb) / .05),
+                   0 6px 20px -6px rgb(var(--shadow-rgb) / .08);
+      --shadow-md: 0 2px 4px rgb(var(--shadow-rgb) / .05),
+                   0 18px 40px -12px rgb(var(--shadow-rgb) / .14);
+      --shadow-lg: 0 4px 8px rgb(var(--shadow-rgb) / .05),
+                   0 30px 70px -18px rgb(var(--shadow-rgb) / .20);
+      /* Aurora blobs behind glass */
+      --aurora-1: rgb(167 139 250 / .22);
+      --aurora-2: rgb(253 186 140 / .20);
+      --aurora-3: rgb(147 197 253 / .16);
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    /* ---------- Scoped transitions (never `transition: all`) ----------
+       Only cheap, specific properties are animated. Colour changes on theme
+       switch are handled by the View Transition (or .theme-animating fallback),
+       so nothing repaints on every scroll/hover. */
+    header {
+      transition:
+        background-color .65s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color .65s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow .65s cubic-bezier(0.22, 1, 0.36, 1),
+        color .65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .project-card,
+    .glass,
+    .stat-card {
+      transition:
+        opacity .7s ease,
+        transform .4s var(--ease),
+        box-shadow .4s var(--ease),
+        border-color .3s ease;
+    }
+
+    /* ---------- Section base ---------- */
+    section[data-theme="light"] {
+      position: relative;
+      isolation: isolate;
+      background-color: var(--bg);
+      color: var(--text-2);
+      border-color: var(--border);
+    }
+
+    #projects[data-theme="light"] { background-color: var(--bg-alt); }
+
+    /* Aurora layer (gives the glass something to blur) */
+    section[data-theme="light"]::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(40% 50% at 12% 18%, var(--aurora-1), transparent 70%),
+        radial-gradient(35% 45% at 88% 30%, var(--aurora-2), transparent 70%),
+        radial-gradient(45% 50% at 50% 105%, var(--aurora-3), transparent 70%);
+    }
+
+    #projects[data-theme="light"]::before {
+      background:
+        radial-gradient(35% 40% at 90% 8%, var(--aurora-1), transparent 70%),
+        radial-gradient(40% 45% at 5% 95%, var(--aurora-2), transparent 70%);
+    }
+
+    /* Paper grain */
+    section[data-theme="light"]::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    section[data-theme="light"] ::selection {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    /* ---------- Typography (mock-ups inside .project-visual & .code-terminal untouched) ---------- */
+    section[data-theme="light"] :is(h1, h2, h3, h4):not(.project-visual *, .code-terminal *) {
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    section[data-theme="light"] h2 .text-zinc-500:not(.project-visual *, .code-terminal *) {
+      background: linear-gradient(110deg, var(--muted) 10%, var(--accent) 120%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    section[data-theme="light"] :is(.text-white, .text-zinc-200):not(.project-visual *, .code-terminal *) { color: var(--text); }
+    section[data-theme="light"] .text-zinc-400:not(.project-visual *, .code-terminal *) { color: var(--text-2); }
+    section[data-theme="light"] :is(.text-zinc-500, .text-zinc-600):not(.project-visual *, .code-terminal *) { color: var(--muted); }
+    section[data-theme="light"] .text-violet-300:not(.project-visual *, .code-terminal *) { color: var(--accent); }
+    section[data-theme="light"] :is(.hover\:text-white, .hover\:text-violet-300):not(.project-visual *, .code-terminal *):hover { color: var(--accent-hover); }
+    section[data-theme="light"] .border-white\/10:not(.project-visual *, .code-terminal *) { border-color: var(--border); }
+
+    section[data-theme="light"] .mono.text-violet-300:not(.code-terminal *) { font-weight: 500; }
+
+    /* ---------- About: Code vs. Design Interactive Toggle & Morph ---------- */
+    .about-segmented {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      border-radius: 999px;
+      background: var(--surface, rgba(255, 255, 255, 0.05));
+      border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.14));
+      box-shadow: var(--shadow-sm);
+      user-select: none;
+    }
+
+    .about-segmented-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      border-radius: 999px;
+      background: linear-gradient(135deg, #6d3fe0 0%, #b026ff 100%);
+      box-shadow: 0 4px 16px rgba(109, 63, 224, 0.38);
+      transform: translate3d(100%, 0, 0); /* Default right = Design */
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background 0.35s ease, box-shadow 0.35s ease;
+      pointer-events: none;
+    }
+
+    .about-segmented[data-active="code"] .about-segmented-pill {
+      transform: translate3d(0%, 0, 0);
+      background: linear-gradient(135deg, #0b0b12 0%, #1e1b2e 100%);
+      box-shadow: 0 4px 18px rgba(176, 38, 255, 0.45), inset 0 0 0 1px rgba(176, 38, 255, 0.55);
+    }
+
+    .about-seg-btn {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--muted, #71717a);
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .about-seg-btn .seg-code-sym {
+      font-family: 'Fira Code', 'DM Mono', monospace;
+      font-size: 11px;
+    }
+
+    .about-segmented[data-active="design"] .about-seg-btn[data-view="design"],
+    .about-segmented[data-active="code"] .about-seg-btn[data-view="code"] {
+      color: #ffffff !important;
+    }
+
+    /* Smooth height wrapper + 3D perspective crossfade/flip stage */
+    .about-stage-wrap {
+      position: relative;
+      perspective: 1400px;
+      transition: height 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: height;
+    }
+
+    .about-panel {
+      width: 100%;
+      backface-visibility: hidden;
+      transform-origin: center top;
+      transition:
+        opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .about-panel.is-active {
+      position: relative;
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
+      filter: blur(0px);
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    .about-panel.is-inactive {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transform: translate3d(0, 14px, 0) rotateX(-6deg) scale(0.985);
+      filter: blur(6px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Dark Terminal IDE ("Code Mode") */
+    .code-terminal {
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(176, 38, 255, 0.16), transparent 48%),
+        radial-gradient(circle at 12% 88%, rgba(0, 240, 255, 0.12), transparent 48%),
+        #0b0b12;
+      border: 1px solid rgba(176, 38, 255, 0.38);
+      box-shadow:
+        0 24px 60px -15px rgba(17, 15, 28, 0.45),
+        0 0 40px -12px rgba(176, 38, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      color: #e4e4e7;
+      font-family: 'Fira Code', 'DM Mono', monospace;
+      overflow: hidden;
+    }
+
+    .code-terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .code-terminal-body {
+      padding: 18px 20px;
+      font-size: 12.5px;
+      line-height: 1.68;
+      overflow-x: auto;
+    }
+
+    .code-line {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .code-ln {
+      color: #4b5563;
+      font-size: 11px;
+      text-align: right;
+      user-select: none;
+    }
+
+    /* Syntax Highlighting Colors */
+    .syn-key  { color: #38bdf8; } /* Bright Blue for keys */
+    .syn-str  { color: #4ade80; } /* Neon Green for strings */
+    .syn-num  { color: #c084fc; font-weight: 600; } /* Neon Purple for numbers/booleans */
+    .syn-punc { color: #94a3b8; } /* Muted Slate for braces/brackets */
+    .syn-cmt  { color: #64748b; font-style: italic; }
+
+    .code-terminal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 16px;
+      background: rgba(176, 38, 255, 0.12);
+      border-top: 1px solid rgba(176, 38, 255, 0.25);
+      font-size: 10.5px;
+      color: #d8b4fe;
+    }
+
+    /* ---------- About: Icon-Driven Feature Cards & Glass Stat Cards ---------- */
+    .about-feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      background: var(--surface, rgba(255, 255, 255, 0.04));
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+      box-shadow: var(--shadow-xs);
+      transition:
+        transform 0.35s var(--ease),
+        box-shadow 0.35s var(--ease),
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+    }
+
+    .about-feature-card:hover {
+      transform: translateY(-4px);
+      background: var(--surface-raised, rgba(255, 255, 255, 0.07));
+      border-color: color-mix(in srgb, var(--accent, #6D3FE0) 35%, var(--border, transparent));
+      box-shadow: var(--shadow-md);
+    }
+
+    .about-feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      background: color-mix(in srgb, var(--accent, #6D3FE0) 8%, transparent);
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+      color: var(--muted, #6E6A78);
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.35s cubic-bezier(.34, 1.56, .64, 1),
+        box-shadow 0.3s ease;
+    }
+
+    .about-feature-card:hover .about-feature-icon {
+      color: var(--accent, #6D3FE0);
+      background: var(--accent-soft, rgba(109, 63, 224, 0.14));
+      border-color: color-mix(in srgb, var(--accent, #6D3FE0) 45%, transparent);
+      transform: scale(1.06);
+      box-shadow: 0 6px 18px -4px color-mix(in srgb, var(--accent, #6D3FE0) 35%, transparent);
+    }
+
+    section[data-theme="light"] .stat-card {
+      padding: 1.25rem 1.25rem 1.1rem;
+      border-radius: 18px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: inset 0 1px 0 var(--glass-highlight), var(--shadow-sm);
+    }
+
+    section[data-theme="light"] .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: inset 0 1px 0 var(--glass-highlight), var(--shadow-md);
+    }
+
+    section[data-theme="light"] .stat-card .text-violet-300 { color: var(--accent-2); }
+
+    /* ---------- Projects: solid ivory cards + layered shadow ---------- */
+    section[data-theme="light"] .glass {
+      background: var(--glass-bg);
+      border-color: var(--glass-border);
+      box-shadow: inset 0 1px 0 var(--glass-highlight), var(--shadow-sm);
+    }
+
+    section[data-theme="light"] .project-card {
+      background: var(--surface);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    section[data-theme="light"] .project-card:hover {
+      background: var(--surface-raised);
+      border-color: rgba(176, 38, 255, 0.55);
+      box-shadow:
+        0 20px 55px -10px rgba(176, 38, 255, 0.28),
+        0 0 42px -12px rgba(0, 240, 255, 0.22),
+        var(--shadow-md);
+    }
+
+    /* Keep project mock-ups readable on their dark gradient */
+    section[data-theme="light"] .project-visual {
+      color: #F4F4F5;
+      box-shadow: inset 0 -1px 0 var(--border);
+    }
+
+    section[data-theme="light"] .project-visual::after {
+      background: linear-gradient(transparent 60%, rgb(29 27 36 / .18));
+    }
+
+    /* ---------- Pills & filters ---------- */
+    section[data-theme="light"] .skill-pill {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: transparent;
+      box-shadow: var(--shadow-xs);
+    }
+
+    section[data-theme="light"] .skill-pill:hover {
+      color: var(--accent-hover);
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+
+    section[data-theme="light"] .filter-btn {
+      color: var(--muted);
+      background: var(--surface);
+      border-color: var(--border);
+    }
+
+    section[data-theme="light"] .filter-btn.active,
+    section[data-theme="light"] .filter-btn:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+      box-shadow: var(--shadow-xs);
+    }
+
+    /* ---------- Navbar follows the section under it ---------- */
+    header.nav-light {
+      background: rgb(246 244 239 / .78);
+      border-color: var(--border);
+      color: var(--text);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      box-shadow: var(--shadow-sm);
+    }
+
+    header.nav-light .nav-link { color: var(--muted); }
+
+    header.nav-light .nav-link:hover,
+    header.nav-light .nav-link.active { color: var(--text); }
+
+    header.nav-light .text-violet-300 { color: var(--accent); }
+
+    header.nav-light .bg-violet-400 {
+      background: var(--accent);
+      color: #FBFAF6;
+    }
+
+    header.nav-light .btn-secondary {
+      color: var(--text);
+      background: var(--surface);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-xs);
+    }
+
+    header.nav-light .btn-secondary:hover {
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-sm);
+    }
+
+    header.nav-light #menu-toggle { color: var(--text-2); }
+
+    header.nav-light #mobile-menu {
+      background: var(--bg);
+      border-color: var(--border);
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- NAVIGATION -->
+  <header class="fixed top-0 z-50 w-full border-b border-white/[0.06] bg-[#09090b]/80 backdrop-blur-xl">
+    <nav class="container-main flex h-[72px] items-center justify-between" aria-label="Main navigation">
+
+      <a href="#home" class="flex items-center gap-2 font-semibold tracking-tight">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-400 text-black font-bold">P</span>
+        <span>Piyathanee<span class="text-violet-300">.</span></span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+
+      <a href="#contact" class="hidden md:inline-flex btn-secondary rounded-full px-5 py-2.5 text-xs font-medium">
+        Let's Talk ↗
+      </a>
+
+      <button id="menu-toggle" class="md:hidden rounded-lg p-2 text-zinc-300 hover:bg-white/10"
+        aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden border-t border-white/10 bg-[#09090b] px-6 py-5 md:hidden">
+      <div class="flex flex-col gap-5 text-sm">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="home" data-theme="dark" class="relative flex items-center overflow-hidden pt-24">
+      <div class="absolute inset-0 grid-bg"></div>
+      <div class="absolute inset-0 hero-glow"></div>
+
+      <div class="container-main relative z-10 grid items-center gap-16 py-6 lg:grid-cols-[1.25fr_.75fr]">
+
+        <div class="reveal">
+          <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-[#b026ff]/40 bg-[#b026ff]/[0.08] px-4 py-2 text-xs text-cyan-200 shadow-[0_0_24px_rgba(176,38,255,0.2)]">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-cyan-400"></span>
+            </span>
+            Available for opportunities
+          </div>
+
+          <p class="mono mb-5 text-xs tracking-[.2em] text-zinc-500">
+            FRONTEND DEVELOPER & UX/UI DESIGNER
+          </p>
+
+          <h1 class="max-w-3xl text-5xl font-semibold leading-[1.12] tracking-[-.055em] sm:text-6xl lg:text-[76px]">
+            Building apps & websites with
+            <span class="gradient-text"> thoughtful UX/UI.</span>
+          </h1>
+
+          <p class="mt-7 max-w-xl text-base leading-8 text-zinc-400 sm:text-lg">
+            I am passionate about building applications and websites, with strengths in UX/UI design and frontend development. I also have foundational backend development skills and am eager to learn and gain hands-on experience in real-world projects.
+          </p>
+
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="#projects" class="btn-primary rounded-full px-7 py-3.5 text-sm font-semibold">
+              Explore Projects <span class="ml-2">↗</span>
+            </a>
+            <a href="CV-PIYATHANEE SRITHONG.pdf" download class="btn-secondary rounded-full px-7 py-3.5 text-sm font-medium">
+              Download Resume ↓
+            </a>
+          </div>
+
+          <div class="mt-14 flex flex-wrap items-center gap-6 text-xs text-zinc-500">
+            <span class="flex items-center gap-2"><span class="text-violet-300">✳</span> Design-minded engineering</span>
+            <span class="flex items-center gap-2"><span class="text-violet-300">✳</span> User-first thinking</span>
+            <span class="flex items-center gap-2"><span class="text-violet-300">✳</span> Clean architecture</span>
+          </div>
+        </div>
+
+        <!-- SPLIT-SCREEN CURSOR WIPE (DUAL-PERSONA PORTRAIT) -->
+        <div class="reveal mx-auto w-full max-w-[400px]">
+          <div id="dual-persona" class="dual-persona-card border border-[#b026ff]/45" role="region" aria-label="Interactive dual-persona portrait: drag or move cursor to compare Builder and Creator sides">
+
+            <!-- ==========================================
+                 BOTTOM LAYER: THE BUILDER (Engineering & UX/UI)
+                 ========================================== -->
+            <div class="persona-layer persona-builder">
+              <div class="absolute inset-0 builder-wireframe"></div>
+
+              <!-- Figma-style corner bounding box accent -->
+              <div class="figma-box">
+                <span class="figma-handle -left-1 -top-1"></span>
+                <span class="figma-handle -right-1 -top-1"></span>
+                <span class="figma-handle -bottom-1 -left-1"></span>
+                <span class="figma-handle -bottom-1 -right-1"></span>
+                <span class="mono absolute -top-2.5 left-3 bg-[#07070d] px-1.5 text-[9px] tracking-widest text-violet-300">FRAME // 400×460</span>
+              </div>
+
+              <!-- Aligned fallback silhouette (visible if profile.jpg is not placed yet) -->
+              <div class="persona-silhouette" aria-hidden="true">
+                <svg class="h-[88%] w-[88%] text-violet-300/25" viewBox="0 0 320 400" fill="none">
+                  <circle cx="160" cy="128" r="56" stroke="currentColor" stroke-width="2" fill="rgba(176,38,255,0.14)"/>
+                  <path d="M56 390C56 296 100 236 160 236C220 236 264 296 264 390" stroke="currentColor" stroke-width="2" fill="rgba(0,240,255,0.10)"/>
+                </svg>
+              </div>
+
+              <!-- Shared portrait image (identical coordinates in both layers) -->
+              <img src="profile_2.jpg" alt="Piyathanee Srithong" class="persona-img" />
+
+              <!-- Top-left label -->
+              <div class="absolute left-6 top-6 z-10">
+                <span class="mono rounded-md bg-cyan-400/15 px-2.5 py-1 text-[10px] font-medium tracking-widest text-cyan-300 border border-cyan-300/45">
+                  01 // THE CODER · BUILDER
+                </span>
+              </div>
+
+              <!-- Floating Badges (Left / Bottom-Left) -->
+              <div class="absolute bottom-6 left-5 z-10 flex flex-col items-start gap-2.5">
+                <span class="persona-badge persona-badge-builder" style="--float-dur: 4.4s; --float-delay: 0s">
+                  <span>⚡</span> Frontend &amp; React.js
+                </span>
+                <span class="persona-badge persona-badge-builder" style="--float-dur: 5.2s; --float-delay: -1.6s">
+                  <span>🎨</span> UX/UI Designer
+                </span>
+                <span class="persona-badge persona-badge-builder" style="--float-dur: 4.8s; --float-delay: -3.1s">
+                  <span>📱</span> Flutter &amp; Full-Stack
+                </span>
+              </div>
+            </div>
+
+            <!-- ==========================================
+                 TOP LAYER: THE CREATOR (3D, Sports & Lifestyle)
+                 Clipped via clip-path: inset(0 0 0 var(--split, 50%))
+                 ========================================== -->
+            <div class="persona-layer persona-creator">
+              <!-- Playful geometric mesh accents (warm neon magenta & peach) -->
+              <div class="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[#ff2a85]/28 blur-2xl"></div>
+              <div class="pointer-events-none absolute bottom-8 right-6 h-36 w-36 rounded-full bg-[#ff8a5b]/25 blur-2xl"></div>
+              <div class="pointer-events-none absolute right-7 top-20 h-16 w-16 rotate-12 rounded-2xl border border-pink-300/35 bg-pink-300/5"></div>
+              <div class="pointer-events-none absolute bottom-28 right-12 h-10 w-10 -rotate-12 rounded-full border border-orange-300/45"></div>
+
+              <!-- Aligned fallback silhouette (identical coordinates) -->
+              <div class="persona-silhouette" aria-hidden="true">
+                <svg class="h-[88%] w-[88%] text-pink-300/25" viewBox="0 0 320 400" fill="none">
+                  <circle cx="160" cy="128" r="56" stroke="currentColor" stroke-width="2" fill="rgba(255,42,133,0.14)"/>
+                  <path d="M56 390C56 296 100 236 160 236C220 236 264 296 264 390" stroke="currentColor" stroke-width="2" fill="rgba(255,138,91,0.12)"/>
+                </svg>
+              </div>
+
+              <!-- Shared portrait image (identical coordinates in both layers) -->
+              <img src="profile_1.jpg" alt="Piyathanee Srithong" class="persona-img" />
+
+              <!-- Bottom-right label -->
+              <div class="absolute bottom-6 right-5 z-10">
+                <span class="mono rounded-md bg-[#ff2a85]/20 px-2.5 py-1 text-[10px] font-medium tracking-widest text-pink-200 border border-pink-400/45">
+                  02 // THE DESIGNER · CREATOR
+                </span>
+              </div>
+
+              <!-- Floating Badges (Right / Top-Right) -->
+              <div class="absolute right-5 top-6 z-10 flex flex-col items-end gap-2.5">
+                <span class="persona-badge persona-badge-creator" style="--float-dur: 4.9s; --float-delay: -0.7s">
+                  <span>🧊</span> 3D Blender &amp; Maya
+                </span>
+                <span class="persona-badge persona-badge-creator" style="--float-dur: 5.5s; --float-delay: -2.4s">
+                  <span>⚽</span> 3x Football IT3K Champ
+                </span>
+                <span class="persona-badge persona-badge-creator" style="--float-dur: 4.3s; --float-delay: -3.8s">
+                  <span>🎬</span> Content Creator &amp; Video
+                </span>
+              </div>
+            </div>
+
+            <!-- ==========================================
+                 INTERACTIVE SPLIT DIVIDER & HANDLE
+                 ========================================== -->
+            <div class="split-divider" aria-hidden="true">
+              <div class="split-knob">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18l-6-6 6-6"/>
+                  <path d="M15 6l6 6-6 6"/>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] tracking-widest text-zinc-600 sm:flex">
+        SCROLL TO EXPLORE
+        <span class="h-8 w-px bg-gradient-to-b from-violet-400 to-transparent"></span>
+      </div>
+    </section>
+
+    <!-- ABOUT (INTERACTIVE CODE VS. DESIGN TOGGLE) -->
+    <section id="about" data-theme="light" class="border-t border-white/[0.06] py-20">
+      <div class="container-main">
+        <div class="grid gap-10 lg:grid-cols-[.68fr_1.32fr] lg:items-start">
+
+          <!-- Left Column: Eyebrow & Headline -->
+          <div class="reveal">
+            <p class="mono mb-4 text-xs tracking-[.2em] text-violet-300">01 / ABOUT ME</p>
+            <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+              Beyond the<br><span class="text-zinc-500">code itself.</span>
+            </h2>
+            <p class="mt-4 max-w-xs text-xs leading-6 text-zinc-500">
+              Switch between the crafted editorial view and the raw developer specification.
+            </p>
+          </div>
+
+          <!-- Right Column: Toggle Control + Morphing Stage -->
+          <div class="reveal">
+
+            <!-- Top-Right Segmented Toggle Switch -->
+            <div class="mb-6 flex items-center justify-between gap-4 sm:justify-end">
+              <span class="mono text-[10px] tracking-widest text-zinc-500">VIEW AS //</span>
+              <div id="about-toggle" class="about-segmented" data-active="design" role="tablist" aria-label="About section view mode">
+                <div class="about-segmented-pill" aria-hidden="true"></div>
+                <button type="button" class="about-seg-btn" data-view="code" role="tab" aria-selected="false" aria-controls="about-panel-code">
+                  <span class="seg-code-sym">{/}</span> Code
+                </button>
+                <button type="button" class="about-seg-btn" data-view="design" role="tab" aria-selected="true" aria-controls="about-panel-design">
+                  <span>✨</span> Design
+                </button>
+              </div>
+            </div>
+
+            <!-- Animated Height & Crossfade/Flip Container -->
+            <div id="about-stage" class="about-stage-wrap">
+
+              <!-- ==========================================
+                   STATE A: "DESIGN MODE" (Icon-Driven Feature Cards + Stats)
+                   ========================================== -->
+              <div id="about-panel-design" class="about-panel is-active" role="tabpanel">
+
+                <!-- Vertical Stack of 3 Horizontal Feature Cards (What I Do & How I Work) -->
+                <div class="flex flex-col gap-3">
+
+                  <!-- Card 1: UX/UI & Product Thinking -->
+                  <article class="about-feature-card">
+                    <div class="about-feature-icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <path d="M14 17.5h7M17.5 14v7"/>
+                      </svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h3 class="text-base font-semibold text-white">Human-Centered UX/UI Design</h3>
+                      <p class="mt-1 text-xs leading-relaxed text-zinc-400 sm:text-sm">
+                        Translating complex user needs into clean wireframes, intuitive user flows, and high-craft interfaces that feel effortless to use.
+                      </p>
+                    </div>
+                  </article>
+
+                  <!-- Card 2: Frontend & Cross-Platform Engineering -->
+                  <article class="about-feature-card">
+                    <div class="about-feature-icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                        <line x1="14" y1="4" x2="10" y2="20"/>
+                      </svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h3 class="text-base font-semibold text-white">Frontend &amp; Cross-Platform Engineering</h3>
+                      <p class="mt-1 text-xs leading-relaxed text-zinc-400 sm:text-sm">
+                        Building responsive web apps and mobile experiences with React, Tailwind CSS, and Flutter—backed by solid MVC backend and database foundations.
+                      </p>
+                    </div>
+                  </article>
+
+                  <!-- Card 3: Ownership & Team Synergy -->
+                  <article class="about-feature-card">
+                    <div class="about-feature-icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                      </svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <h3 class="text-base font-semibold text-white">Adaptable Team Player &amp; Fast Learner</h3>
+                      <p class="mt-1 text-xs leading-relaxed text-zinc-400 sm:text-sm">
+                        Bridging the gap between designers and developers with clear communication, high ownership, and a hunger to learn from real-world challenges.
+                      </p>
+                    </div>
+                  </article>
+
+                </div>
+              </div>
+
+              <!-- ==========================================
+                   STATE B: "CODE MODE" (Dark Terminal IDE)
+                   ========================================== -->
+              <div id="about-panel-code" class="about-panel is-inactive" role="tabpanel" aria-hidden="true">
+                <div class="code-terminal">
+                  <div class="code-terminal-bar">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2.5 w-2.5 rounded-full bg-red-400/90"></span>
+                      <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
+                      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
+                      <span class="ml-3 text-[11px] font-medium text-zinc-300">piyathanee.about.json</span>
+                    </div>
+                    <span class="rounded bg-white/[0.06] px-2 py-0.5 text-[10px] text-cyan-300">JSON · UTF-8</span>
+                  </div>
+
+                  <div class="code-terminal-body">
+                    <div class="code-line"><span class="code-ln">01</span><span><span class="syn-punc">{</span></span></div>
+                    <div class="code-line"><span class="code-ln">02</span><span class="pl-4"><span class="syn-key">"name"</span><span class="syn-punc">:</span> <span class="syn-str">"Piyathanee Srithong"</span><span class="syn-punc">,</span></span></div>
+                    <div class="code-line"><span class="code-ln">03</span><span class="pl-4"><span class="syn-key">"role"</span><span class="syn-punc">:</span> <span class="syn-str">"Frontend Developer &amp; UX/UI Designer"</span><span class="syn-punc">,</span></span></div>
+                    <div class="code-line"><span class="code-ln">04</span><span class="pl-4"><span class="syn-key">"whatIDo"</span><span class="syn-punc">: [</span></span></div>
+                    <div class="code-line"><span class="code-ln">05</span><span class="pl-8"><span class="syn-punc">{</span> <span class="syn-key">"pillar"</span><span class="syn-punc">:</span> <span class="syn-str">"Human-Centered UX/UI Design"</span><span class="syn-punc">,</span> <span class="syn-key">"focus"</span><span class="syn-punc">:</span> <span class="syn-str">"Translating complex user needs into clean wireframes, intuitive user flows, and high-craft interfaces."</span> <span class="syn-punc">},</span></span></div>
+                    <div class="code-line"><span class="code-ln">06</span><span class="pl-8"><span class="syn-punc">{</span> <span class="syn-key">"pillar"</span><span class="syn-punc">:</span> <span class="syn-str">"Frontend &amp; Cross-Platform Engineering"</span><span class="syn-punc">,</span> <span class="syn-key">"focus"</span><span class="syn-punc">:</span> <span class="syn-str">"Building responsive web apps and mobile experiences with React, Tailwind CSS, and Flutter."</span> <span class="syn-punc">},</span></span></div>
+                    <div class="code-line"><span class="code-ln">07</span><span class="pl-8"><span class="syn-punc">{</span> <span class="syn-key">"pillar"</span><span class="syn-punc">:</span> <span class="syn-str">"Adaptable Team Player &amp; Fast Learner"</span><span class="syn-punc">,</span> <span class="syn-key">"focus"</span><span class="syn-punc">:</span> <span class="syn-str">"Bridging the gap between designers and developers with clear communication and high ownership."</span> <span class="syn-punc">}</span></span></div>
+                    <div class="code-line"><span class="code-ln">08</span><span class="pl-4"><span class="syn-punc">],</span></span></div>
+                    <div class="code-line"><span class="code-ln">09</span><span class="pl-4"><span class="syn-key">"openToOpportunities"</span><span class="syn-punc">:</span> <span class="syn-num">true</span></span></div>
+                    <div class="code-line"><span class="code-ln">10</span><span><span class="syn-punc">}</span></span></div>
+                  </div>
+
+                  <div class="code-terminal-footer">
+                    <span>✓ 0 errors · schema validated</span>
+                    <span>Ln 10, Col 2 · Fira Code</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS (BENTO BOX UI) -->
+    <section id="skills" data-theme="dark" class="border-t border-white/[0.06] bg-[#09090d] py-20">
+      <div class="container-main">
+        <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end reveal">
+          <div>
+            <p class="mono mb-3 text-xs tracking-[.2em] text-violet-300">02 / CAPABILITIES</p>
+            <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+              Tools of the trade<span class="text-violet-300">.</span>
+            </h2>
+          </div>
+          <p class="max-w-md text-xs leading-6 text-zinc-500 sm:text-sm">
+            Hover over any tool to reveal its brand colors—spanning frontend, mobile, backend, and 3D creative workflows.
+          </p>
+        </div>
+
+        <!-- 4-Column Asymmetrical Bento Grid -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[minmax(148px,auto)]">
+
+          <!-- CELL 1: Frontend Web Architecture (2 cols × 1 row) -->
+          <article class="bento-card p-6 lg:col-span-2 flex flex-col justify-between reveal">
+            <div class="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-[#b026ff]/15 blur-2xl"></div>
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="mono text-[10px] tracking-widest text-violet-300">01 // WEB INTERFACES</span>
+                <h3 class="mt-1 text-lg font-semibold">Frontend Architecture</h3>
+                <p class="mt-1 text-xs text-zinc-500">Responsive, component-driven web interfaces with modern styling.</p>
+              </div>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-sm text-violet-300">⌘</span>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <!-- React.js -->
+              <span class="tool-chip" style="--brand: #61DAFB">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <circle cx="12" cy="12" r="2.2" fill="currentColor"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4.2"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/>
+                </svg>
+                React.js
+              </span>
+              <!-- JavaScript -->
+              <span class="tool-chip" style="--brand: #F7DF1E">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 3h18v18H3V3zm9.5 13.7c0 1.5-.9 2.2-2.2 2.2-1.1 0-1.8-.6-2.2-1.3l1.2-.7c.2.4.5.7 1 .7.5 0 .8-.2.8-.9v-5.2h1.4v5.2zm4.8 2.2c-1.4 0-2.3-.7-2.7-1.6l1.2-.7c.3.5.7.9 1.5.9.6 0 1-.3 1-.7 0-.5-.4-.7-1.1-1l-.4-.2c-1.1-.5-1.9-1.1-1.9-2.3 0-1.2.9-2.1 2.3-2.1 1 0 1.7.3 2.2 1.2l-1.2.8c-.3-.5-.6-.7-1-.7-.5 0-.8.3-.8.7 0 .5.3.7 1 1l.4.2c1.3.6 2 1.1 2 2.4 0 1.4-1.1 2.1-2.5 2.1z"/>
+                </svg>
+                JavaScript
+              </span>
+              <!-- Tailwind CSS -->
+              <span class="tool-chip" style="--brand: #38BDF8">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35.98 1 2.12 2.15 4.59 2.15 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C15.61 7.15 14.47 6 12 6zM7 12c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35C8.39 16.85 9.53 18 12 18c2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C10.61 13.15 9.47 12 7 12z"/>
+                </svg>
+                Tailwind CSS
+              </span>
+              <!-- HTML5 -->
+              <span class="tool-chip" style="--brand: #E34F26">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 2h16l-1.46 16.2L12 22l-6.54-3.8L4 2zm13.1 5.3H7.7l.2 2.1h9l-.6 6.5-4.3 1.2-4.3-1.2-.3-3.2h2.1l.15 1.6 2.35.65 2.35-.65.25-2.6H7.2l-.55-6.35h10.55l-.1 1.9z"/>
+                </svg>
+                HTML
+              </span>
+              <!-- Bootstrap -->
+              <span class="tool-chip" style="--brand: #7952B3">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4zm4.5 3v10h4.2c2.1 0 3.5-1.1 3.5-2.9 0-1.3-.9-2.2-2.1-2.4v-.1c1-.3 1.7-1.1 1.7-2.2 0-1.6-1.2-2.4-3.2-2.4H8.5zm2.1 1.7h1.7c.9 0 1.5.4 1.5 1.1 0 .8-.6 1.2-1.6 1.2h-1.6V8.7zm0 4h1.9c1.1 0 1.7.5 1.7 1.3 0 .9-.6 1.3-1.7 1.3h-1.9v-2.6z"/>
+                </svg>
+                Bootstrap
+              </span>
+            </div>
+          </article>
+
+          <!-- CELL 2: Cross-Platform Mobile (1 col × 1 row) -->
+          <article class="bento-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <span class="mono text-[10px] tracking-widest text-cyan-300">02 // MOBILE APPS</span>
+              <h3 class="mt-1 text-lg font-semibold">Flutter &amp; Dart</h3>
+              <p class="mt-1 text-xs text-zinc-500">Cross-platform iOS &amp; Android apps (IT Connect).</p>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <!-- Flutter -->
+              <span class="tool-chip" style="--brand: #02569B">
+                <svg viewBox="0 0 24 24">
+                  <path d="M14.3 2L4.5 11.8l3 3L20.3 2h-6zm0 9.2l-5.3 5.3 5.3 5.5h6l-5.3-5.5 5.3-5.3h-6z"/>
+                </svg>
+                Flutter
+              </span>
+              <!-- Dart -->
+              <span class="tool-chip" style="--brand: #0175C2">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4.5 4.5L12 2l8 8v8.5L15.5 22H7l-5-5 2.5-12.5zm3.2 2.3v8.7l4.3 4.3h5.5V12L12 6.8H7.7z"/>
+                </svg>
+                Dart
+              </span>
+            </div>
+          </article>
+
+          <!-- CELL 3: 3D, UX/UI & Creative Studio (1 col × 2 rows TALL) -->
+          <article class="bento-card p-6 lg:row-span-2 flex flex-col justify-between reveal">
+            <div class="pointer-events-none absolute -bottom-12 -right-12 h-44 w-44 rounded-full bg-cyan-400/15 blur-2xl"></div>
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="mono text-[10px] tracking-widest text-pink-300">03 // CREATIVE STUDIO</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-xs text-pink-300">✧</span>
+              </div>
+              <h3 class="mt-2 text-lg font-semibold">UX/UI, 3D &amp; Media</h3>
+              <p class="mt-2 text-xs leading-5 text-zinc-500">
+                User-centric wireframing, 3D modeling, visual compositing, and video production.
+              </p>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <!-- UX/UI Design (Figma palette) -->
+              <span class="tool-chip" style="--brand: #F24E1E">
+                <svg viewBox="0 0 24 24">
+                  <path d="M8.5 2A3.5 3.5 0 0 0 5 5.5c0 1.3.7 2.4 1.8 3A3.5 3.5 0 0 0 5 11.5c0 1.3.7 2.4 1.8 3A3.5 3.5 0 1 0 12 17.5V2H8.5zm3.5 0v7h3.5a3.5 3.5 0 1 0 0-7H12zm3.5 7a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
+                </svg>
+                UX/UI Design
+              </span>
+              <!-- Blender -->
+              <span class="tool-chip" style="--brand: #F5792A">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12.8 3.2L8.2 7.1H3v2.4h3.5l-4.2 4.3a5.8 5.8 0 0 0 4.2 9.8h8a6.5 6.5 0 0 0 6.5-6.5c0-2.9-1.9-5.3-4.6-6.2L12.8 3.2zm1.7 8.8a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6zm0 2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z"/>
+                </svg>
+                Blender
+              </span>
+              <!-- Autodesk Maya -->
+              <span class="tool-chip" style="--brand: #37A5CC">
+                <svg viewBox="0 0 24 24">
+                  <path d="M2 20V4h3.8l6.2 9.8L18.2 4H22v16h-3.5v-9.2L12 19.5 5.5 10.8V20H2z"/>
+                </svg>
+                Autodesk Maya
+              </span>
+              <!-- Adobe Photoshop -->
+              <span class="tool-chip" style="--brand: #31A8FF">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 3h18v18H3V3zm4.2 4.8v8.4h2v-2.8h1.5c2 0 3.3-1 3.3-2.8 0-1.7-1.2-2.8-3.2-2.8H7.2zm2 1.6h1.3c1 0 1.5.4 1.5 1.2 0 .8-.5 1.2-1.5 1.2H9.2V9.4zm7.7 1.8c-1.5 0-2.5.8-2.5 2 0 1 .7 1.6 2 1.9l.8.2c.6.1.8.3.8.6 0 .4-.4.6-1 .6-.7 0-1.4-.3-1.9-.7l-.8 1.3c.7.5 1.6.8 2.7.8 1.7 0 2.8-.8 2.8-2.1 0-1-.6-1.6-2-1.9l-.8-.2c-.5-.1-.8-.3-.8-.6 0-.3.3-.5.9-.5.6 0 1.2.2 1.6.5l.8-1.2c-.6-.4-1.5-.7-2.6-.7z"/>
+                </svg>
+                Photoshop
+              </span>
+              <!-- Adobe Premiere Pro -->
+              <span class="tool-chip" style="--brand: #9999FF">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 3h18v18H3V3zm4.2 4.8v8.4h2v-2.8h1.5c2 0 3.3-1 3.3-2.8 0-1.7-1.2-2.8-3.2-2.8H7.2zm2 1.6h1.3c1 0 1.5.4 1.5 1.2 0 .8-.5 1.2-1.5 1.2H9.2V9.4zm6.1 1.9v4.9h1.9v-2.9c0-1 .6-1.6 1.6-1.6h.6v-1.8c-.9 0-1.7.4-2.2 1.2v-1h-1.9v1.2z"/>
+                </svg>
+                Premiere Pro
+              </span>
+            </div>
+
+            <div class="mt-5 border-t border-white/[0.07] pt-3 flex items-center justify-between text-[11px] text-zinc-500">
+              <span class="mono">DESIGN × 3D MOTION</span>
+              <span class="text-violet-300">5 Tools</span>
+            </div>
+          </article>
+
+          <!-- CELL 4: Relational Databases (1 col × 1 row) -->
+          <article class="bento-card p-6 flex flex-col justify-between reveal">
+            <div>
+              <span class="mono text-[10px] tracking-widest text-emerald-300">04 // DATA LAYER</span>
+              <h3 class="mt-1 text-lg font-semibold">Databases</h3>
+              <p class="mt-1 text-xs text-zinc-500">Relational schema design &amp; queries.</p>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <!-- PostgreSQL -->
+              <span class="tool-chip" style="--brand: #4169E1">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3C7.6 3 4 4.8 4 7v10c0 2.2 3.6 4 8 4s8-1.8 8-4V7c0-2.2-3.6-4-8-4zm0 2c3.5 0 6 1.1 6 2s-2.5 2-6 2-6-1.1-6-2 2.5-2 6-2zm6 12c0 .9-2.5 2-6 2s-6-1.1-6-2v-2.2c1.5.8 3.6 1.2 6 1.2s4.5-.4 6-1.2V17zm0-5c0 .9-2.5 2-6 2s-6-1.1-6-2V9.8c1.5.8 3.6 1.2 6 1.2s4.5-.4 6-1.2V12z"/>
+                </svg>
+                PostgreSQL
+              </span>
+              <!-- MySQL -->
+              <span class="tool-chip" style="--brand: #00758F">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3v12c0 1.7-3.6 3-8 3s-8-1.3-8-3V6zm2 3.5V12c0 .8 2.7 1.5 6 1.5s6-.7 6-1.5V9.5c-1.5.6-3.6 1-6 1s-4.5-.4-6-1zm0 5V17c0 .8 2.7 1.5 6 1.5s6-.7 6-1.5v-2.5c-1.5.6-3.6 1-6 1s-4.5-.4-6-1z"/>
+                </svg>
+                MySQL
+              </span>
+            </div>
+          </article>
+
+          <!-- CELL 5: Backend & Systems Engineering (2 cols × 1 row) -->
+          <article class="bento-card p-6 lg:col-span-2 flex flex-col justify-between reveal">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="mono text-[10px] tracking-widest text-violet-300">05 // SERVER &amp; MVC LOGIC</span>
+                <h3 class="mt-1 text-lg font-semibold">Backend &amp; Core Languages</h3>
+                <p class="mt-1 text-xs text-zinc-500">RESTful APIs, MVC architecture, authentication, and foundational systems programming.</p>
+              </div>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-sm text-cyan-300">⌁</span>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <!-- Node.js -->
+              <span class="tool-chip" style="--brand: #5FA04E">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2L3 7.2v9.6L12 22l9-5.2V7.2L12 2zm4.2 13.2c0 1.3-1.1 2.1-2.8 2.1-1.4 0-2.4-.6-2.8-1.6l1.4-.8c.3.6.7.9 1.4.9.7 0 1.2-.3 1.2-.8 0-.5-.4-.7-1.4-1l-.6-.2c-1.3-.4-2.1-1-2.1-2.2 0-1.3 1.1-2.1 2.6-2.1 1.2 0 2.1.5 2.6 1.4l-1.4.8c-.3-.5-.7-.7-1.2-.7-.6 0-1 .3-1 .7 0 .4.4.6 1.3.9l.6.2c1.4.4 2.2 1 2.2 2.2z"/>
+                </svg>
+                Node.js
+              </span>
+              <!-- Django -->
+              <span class="tool-chip" style="--brand: #44B78B">
+                <svg viewBox="0 0 24 24">
+                  <path d="M11.2 3h2.6v12.1c-1.3.3-2.3.4-3.4.4-3.2 0-4.9-1.4-4.9-4.2 0-2.7 1.8-4.4 4.5-4.4.4 0 .8 0 1.2.1V3zm0 6.1c-.3-.1-.6-.1-.9-.1-1.4 0-2.2.9-2.2 2.3 0 1.4.8 2.2 2.2 2.2.3 0 .6 0 .9-.1V9.1zm4.6-2h2.6v8c0 2.8-.2 4.1-.8 5.2-.6 1.1-1.4 1.8-3 2.5l-2.3-1.1c1.5-.7 2.2-1.3 2.7-2.2.5-.9.6-2 .6-4.7V7.1zm0-4.1h2.6v2.6h-2.6V3z"/>
+                </svg>
+                Django
+              </span>
+              <!-- Python -->
+              <span class="tool-chip" style="--brand: #3776AB">
+                <svg viewBox="0 0 24 24">
+                  <path d="M11.9 2C7.8 2 8.1 3.8 8.1 3.8v2h3.9v.7H6.5S3 6.1 3 10.2s3 3.9 3 3.9h1.8v-2.1c0-1.5 1.3-2.8 2.8-2.8h4.6c1.3 0 2.3-1 2.3-2.3V3.8S17.9 2 11.9 2zm-2.2 1.3a.8.8 0 1 1 0 1.6.8.8 0 0 1 0-1.6zm2.4 18.7c4.1 0 3.8-1.8 3.8-1.8v-2h-3.9v-.7h5.5s3.5.4 3.5-3.7-3-3.9-3-3.9h-1.8v2.1c0 1.5-1.3 2.8-2.8 2.8H8.8c-1.3 0-2.3 1-2.3 2.3v3.1S6.1 22 12.1 22zm2.2-1.3a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6z"/>
+                </svg>
+                Python
+              </span>
+              <!-- PHP -->
+              <span class="tool-chip" style="--brand: #8892BF">
+                <svg viewBox="0 0 24 24">
+                  <ellipse cx="12" cy="12" rx="10" ry="6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M7 14.5l.8-5h2.1c1.1 0 1.7.6 1.5 1.6-.2 1.1-.9 1.7-2 1.7H8.3l-.3 1.7H7zm4.8 0l.8-5h1l-.3 1.8h1.2c.9 0 1.3.5 1.1 1.4l-.3 1.8h-1.1l.3-1.6c.1-.4-.1-.6-.5-.6h-1l-.3 2.2h-.9z"/>
+                </svg>
+                PHP
+              </span>
+              <!-- Java -->
+              <span class="tool-chip" style="--brand: #F89820">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9.5 15.5c-1.8.5-1.1 1.5 1.8 1.6 2 .1 3.7-.3 4.5-.8-.8.9-3.5 1.3-5.8.9-2.8-.4-2.1-1.9-.5-1.7zm5.9-2.2c-2.2.4-4.7.4-6.4-.1-1.2-.4-.4-1.1.3-1 1.5.2 3.7.3 5.5-.1.9-.2 1.5.9.6 1.2zm-2.3-10.3c.8 1.9-1.9 3.4-2.1 5.1-.2 1.3 1.2 2.5 1.2 2.5s-2.8-1.2-2.1-3.3c.6-1.8 3.2-2.5 3-4.3zm1.9 3.3c1.2 1.3-.3 2.6-.3 3.9 0 .8.6 1.5.6 1.5s-1.9-.9-1.4-2.6c.4-1.3 1.8-1.9 1.1-2.8zM6.5 18.8c2.2.7 5.8.8 8.7.1 0 0 .5.4-.6.8-2.5.8-6.9.8-9.1-.1-.7-.3.3-.8 1-.8zm11.2-2.7c.7-.5 1.4-1.2 1.4-1.9 0-.5-.4-.8-1-.8-.3 0-.6.1-.9.3l-.2-1c.5-.2 1-.3 1.5-.3 1.2 0 2 .6 2 1.7 0 1.1-1 2.1-2.5 2.7l-.3-.7z"/>
+                </svg>
+                Java
+              </span>
+              <!-- C Language -->
+              <span class="tool-chip" style="--brand: #659AD2">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm3.3 12.7A4.5 4.5 0 1 1 15.3 9l-1.6 1a2.6 2.6 0 1 0 0 3.7l1.6 1z"/>
+                </svg>
+                C
+              </span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" data-theme="light" class="border-t border-white/[0.06] py-28">
+      <div class="container-main">
+        <div class="mb-12 flex flex-col justify-between gap-8 md:flex-row md:items-end reveal">
+          <div>
+            <p class="mono mb-4 text-xs tracking-[.2em] text-violet-300">03 / SELECTED WORK</p>
+            <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+              Things I've built<span class="text-violet-300">.</span>
+            </h2>
+            <p class="mt-4 text-sm text-zinc-500">A selection of engineering and design work.</p>
+          </div>
+
+          <div class="flex flex-wrap gap-2" id="project-filters" aria-label="Filter projects">
+            <button class="filter-btn active rounded-full px-4 py-2 text-xs" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn rounded-full px-4 py-2 text-xs" data-filter="development" aria-pressed="false">Development</button>
+            <button class="filter-btn rounded-full px-4 py-2 text-xs" data-filter="design" aria-pressed="false">UI/UX Design</button>
+          </div>
+        </div>
+
+        <div id="project-grid" class="grid gap-6 md:grid-cols-2">
+
+          <!-- PROJECT 1 -->
+          <article class="project-card overflow-hidden rounded-2xl reveal" data-category="development" data-project="0">
+            <div class="project-visual flex items-center justify-center bg-gradient-to-br from-indigo-950 via-violet-950 to-zinc-900 p-8">
+              <div class="w-full max-w-[320px] rounded-xl border border-white/10 bg-[#101018] p-5 shadow-2xl transition-transform duration-500 hover:scale-105">
+                <div class="mb-5 flex justify-between">
+                  <span class="text-xs font-semibold">IT Connect</span>
+                  <span class="text-[10px] text-zinc-500">Faculty App / 2026</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="rounded-lg bg-white/5 p-3"><p class="text-[9px] text-zinc-500">News</p><p class="mt-2 text-lg font-semibold">Live</p></div>
+                  <div class="rounded-lg bg-white/5 p-3"><p class="text-[9px] text-zinc-500">Activity</p><p class="mt-2 text-lg font-semibold">120h</p></div>
+                  <div class="rounded-lg bg-white/5 p-3"><p class="text-[9px] text-zinc-500">Docs</p><p class="mt-2 text-lg font-semibold text-emerald-300">Sync</p></div>
+                </div>
+                <div class="mt-4 flex h-20 items-end gap-2">
+                  <span class="h-8 flex-1 rounded-t bg-violet-500/40"></span>
+                  <span class="h-12 flex-1 rounded-t bg-violet-500/50"></span>
+                  <span class="h-10 flex-1 rounded-t bg-violet-500/60"></span>
+                  <span class="h-16 flex-1 rounded-t bg-violet-400"></span>
+                  <span class="h-14 flex-1 rounded-t bg-violet-500/70"></span>
+                  <span class="h-20 flex-1 rounded-t bg-violet-400"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-7">
+              <div class="mb-3 flex items-center justify-between">
+                <span class="mono text-[10px] tracking-wider text-violet-300">01 / SENIOR PROJECT (MOBILE & WEB)</span>
+                <span class="text-xs text-zinc-600">2026</span>
+              </div>
+              <h3 class="text-xl font-semibold">IT Connect</h3>
+              <p class="mt-3 text-sm leading-7 text-zinc-400">
+                A comprehensive faculty mobile application built with Flutter, paired with a web-based admin panel for managing news, activity hours, scholarships, and documents.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Flutter</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Dart</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Web Admin Panel</span>
+              </div>
+              <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-5">
+                <button class="text-xs text-white hover:text-violet-300" onclick="openProject(0)">Case Study ↗</button>
+                <div class="flex gap-4">
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">Live Demo ↗</a>
+                  <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 2 -->
+          <article class="project-card overflow-hidden rounded-2xl reveal" data-category="development" data-project="1">
+            <div class="project-visual flex items-center justify-center bg-gradient-to-br from-emerald-950 via-teal-950 to-zinc-900 p-8">
+              <div class="w-full max-w-[310px] rounded-2xl bg-[#f5f5f0] p-5 text-zinc-900 shadow-2xl transition-transform duration-500 hover:rotate-1">
+                <div class="flex items-center justify-between text-[10px] font-semibold">
+                  <span>STORE2HAND / MARKETPLACE</span><span>☰</span>
+                </div>
+                <div class="py-7">
+                  <p class="text-[9px] tracking-[.2em] text-zinc-500">PRE-LOVED APPAREL</p>
+                  <h4 class="mt-3 text-3xl font-semibold leading-tight tracking-tight">Second-hand<br>shirt market.</h4>
+                  <div class="mt-5 h-20 rounded-lg bg-gradient-to-br from-emerald-200 to-stone-300"></div>
+                </div>
+                <div class="flex justify-between border-t border-zinc-300 pt-3 text-[9px]"><span>Browse listings</span><span>↗</span></div>
+              </div>
+            </div>
+
+            <div class="p-7">
+              <div class="mb-3 flex items-center justify-between">
+                <span class="mono text-[10px] tracking-wider text-emerald-300">02 / E-COMMERCE MARKETPLACE</span>
+                <span class="text-xs text-zinc-600">2025</span>
+              </div>
+              <h3 class="text-xl font-semibold">Store2hand Shirt</h3>
+              <p class="mt-3 text-sm leading-7 text-zinc-400">
+                A second-hand clothing marketplace website built with Django, enabling users to list products, upload images, and manage listings with user authentication.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Django</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Python</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Database</span>
+              </div>
+              <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-5">
+                <button class="text-xs text-white hover:text-violet-300" onclick="openProject(1)">Case Study ↗</button>
+                <div class="flex gap-4">
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">Live Demo ↗</a>
+                  <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 3 -->
+          <article class="project-card overflow-hidden rounded-2xl reveal" data-category="development" data-project="2">
+            <div class="project-visual flex items-center justify-center bg-gradient-to-br from-amber-950 via-orange-950 to-zinc-900 p-8">
+              <div class="w-full max-w-[320px] rounded-xl border border-white/10 bg-[#181512] p-5 shadow-2xl transition-transform duration-500 hover:scale-105">
+                <div class="mb-4 flex items-center justify-between">
+                  <span class="text-xs font-semibold">Panda Shabu</span>
+                  <span class="rounded-full bg-orange-400/10 px-2 py-1 text-[9px] text-orange-300">Ordering</span>
+                </div>
+                <div class="space-y-3">
+                  <div class="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                    <p class="text-[9px] text-zinc-500">ACTIVE ORDER</p>
+                    <p class="mt-1 text-xs">Table #04 — Shabu Set & Soup</p>
+                    <div class="mt-3 h-1 rounded-full bg-white/10"><div class="h-full w-3/4 rounded-full bg-orange-400"></div></div>
+                  </div>
+                  <div class="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                    <p class="text-[9px] text-zinc-500">BACKEND MANAGEMENT</p>
+                    <p class="mt-1 text-xs">Menu & kitchen queue control</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-7">
+              <div class="mb-3 flex items-center justify-between">
+                <span class="mono text-[10px] tracking-wider text-orange-300">03 / RESTAURANT SYSTEM</span>
+                <span class="text-xs text-zinc-600">2024</span>
+              </div>
+              <h3 class="text-xl font-semibold">Panda Shabu</h3>
+              <p class="mt-3 text-sm leading-7 text-zinc-400">
+                A restaurant ordering system for a shabu restaurant using PHP, allowing customers to place orders and staff to manage menus and backend order processing.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">PHP</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">MySQL</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Web System</span>
+              </div>
+              <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-5">
+                <button class="text-xs text-white hover:text-violet-300" onclick="openProject(2)">Case Study ↗</button>
+                <div class="flex gap-4">
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">Live Demo ↗</a>
+                  <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 4 -->
+          <article class="project-card overflow-hidden rounded-2xl reveal" data-category="design" data-project="3">
+            <div class="project-visual flex items-center justify-center bg-gradient-to-br from-pink-950 via-fuchsia-950 to-zinc-900 p-8">
+              <div class="w-full max-w-[310px] rounded-2xl border border-white/10 bg-[#17111c] p-5 shadow-2xl transition-transform duration-500 hover:-rotate-1">
+                <div class="mb-5 flex justify-between text-xs"><span class="font-semibold">Catch Coin Market</span><span class="text-zinc-500">POS</span></div>
+                <div class="grid grid-cols-4 gap-2">
+                  <div class="h-10 rounded-lg bg-violet-300"></div>
+                  <div class="h-10 rounded-lg bg-indigo-400"></div>
+                  <div class="h-10 rounded-lg bg-pink-300"></div>
+                  <div class="h-10 rounded-lg bg-emerald-300"></div>
+                </div>
+                <div class="mt-5 space-y-3">
+                  <div class="h-2 w-3/4 rounded bg-white/30"></div>
+                  <div class="h-2 w-1/2 rounded bg-white/10"></div>
+                  <div class="mt-5 flex gap-2">
+                    <div class="rounded-full bg-violet-300 px-4 py-2 text-[9px] text-black">Checkout</div>
+                    <div class="rounded-full border border-white/20 px-4 py-2 text-[9px]">Inventory</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-7">
+              <div class="mb-3 flex items-center justify-between">
+                <span class="mono text-[10px] tracking-wider text-pink-300">04 / DESKTOP POS APPLICATION</span>
+                <span class="text-xs text-zinc-600">2023</span>
+              </div>
+              <h3 class="text-xl font-semibold">Catch Coin Market (POS)</h3>
+              <p class="mt-3 text-sm leading-7 text-zinc-400">
+                A Point of Sale (POS) system developed using Java with MVC architecture, featuring sales processing and real-time inventory management.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">Java</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">MVC Architecture</span>
+                <span class="skill-pill rounded-full px-3 py-1.5 text-[10px]">OOP</span>
+              </div>
+              <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-5">
+                <button class="text-xs text-white hover:text-violet-300" onclick="openProject(3)">Case Study ↗</button>
+                <div class="flex gap-4">
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">Live Demo ↗</a>
+                  <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-xs text-zinc-500 hover:text-white">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE (EDUCATION TIMELINE + EXTRACURRICULAR CARDS) -->
+    <section id="experience" data-theme="dark" class="border-t border-white/[0.06] bg-[#09090d] py-20">
+      <div class="container-main">
+
+        <!-- Section Header -->
+        <div class="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end reveal">
+          <div>
+            <p class="mono mb-3 text-xs tracking-[.2em] text-violet-300">04 / BACKGROUND</p>
+            <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+              Education &amp; <span class="text-zinc-500">Activities.</span>
+            </h2>
+          </div>
+          <p class="max-w-md text-xs leading-6 text-zinc-500 sm:text-sm">
+            Academic progression paired with student leadership, athletics, and creative community building.
+          </p>
+        </div>
+
+        <div class="grid gap-12 lg:grid-cols-[.95fr_1.05fr] lg:items-start">
+
+          <!-- ==========================================
+               LEFT COLUMN: EDUCATION (VERTICAL TIMELINE UI)
+               ========================================== -->
+          <div class="reveal">
+            <div class="mb-6 flex items-center gap-3">
+              <span class="mono rounded-md border border-[#b026ff]/40 bg-[#b026ff]/10 px-2.5 py-1 text-[10px] tracking-widest text-violet-300">
+                ACADEMIC PATHWAY
+              </span>
+              <span class="h-px flex-1 bg-white/[0.07]"></span>
+            </div>
+
+            <div class="edu-timeline">
+              <div class="timeline-line" aria-hidden="true"></div>
+
+              <!-- University -->
+              <article class="timeline-item pb-10">
+                <div class="timeline-dot" aria-hidden="true"></div>
+                <div class="glass rounded-2xl p-6 border border-white/[0.08]">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="mono rounded-full bg-[#b026ff]/15 px-3 py-1 text-[10px] font-medium text-violet-300 border border-[#b026ff]/35">
+                      2022 — 2026 · UNIVERSITY
+                    </span>
+                    <span class="mono text-[10px] text-cyan-300">B.Sc. (IT)</span>
+                  </div>
+
+                  <h3 class="mt-3.5 text-lg font-semibold leading-snug text-white">
+                    Bachelor of Science in Information Technology
+                  </h3>
+                  <p class="mt-1 text-xs font-medium text-violet-300">
+                    King Mongkut's Institute of Technology Ladkrabang (KMITL)
+                  </p>
+
+                  <p class="mt-3.5 text-xs leading-6 text-zinc-400">
+                    Focused on software engineering, UX/UI design, frontend/backend web development, and cross-platform mobile applications.
+                  </p>
+
+                  <div class="mt-4 flex flex-wrap gap-1.5 border-t border-white/[0.07] pt-3.5">
+                    <span class="activity-pill">IT Connect (Senior Project)</span>
+                    <span class="activity-pill">Store2hand Shirt</span>
+                    <span class="activity-pill">Panda Shabu</span>
+                    <span class="activity-pill">Catch Coin POS</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- High School -->
+              <article class="timeline-item">
+                <div class="timeline-dot timeline-dot-secondary" aria-hidden="true"></div>
+                <div class="glass rounded-2xl p-6 border border-white/[0.08]">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="mono rounded-full bg-cyan-400/10 px-3 py-1 text-[10px] font-medium text-cyan-300 border border-cyan-400/30">
+                      2016 — 2022 · HIGH SCHOOL
+                    </span>
+                    <span class="mono text-[10px] text-zinc-500">STEM PROGRAM</span>
+                  </div>
+
+                  <h3 class="mt-3.5 text-lg font-semibold leading-snug text-white">
+                    Science, Math &amp; Engineering Program
+                  </h3>
+                  <p class="mt-1 text-xs font-medium text-cyan-300">
+                    Debsirinromklao School
+                  </p>
+
+                  <p class="mt-3.5 text-xs leading-6 text-zinc-400">
+                    Completed intensive coursework in science, mathematics, and engineering fundamentals, building analytical problem-solving skills.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               RIGHT COLUMN: EXTRACURRICULAR ACTIVITIES (CARDS / BADGES UI)
+               ========================================== -->
+          <div class="reveal">
+            <div class="mb-6 flex items-center gap-3">
+              <span class="mono rounded-md border border-cyan-400/35 bg-cyan-400/10 px-2.5 py-1 text-[10px] tracking-widest text-cyan-300">
+                EXTRACURRICULAR &amp; LEADERSHIP
+              </span>
+              <span class="h-px flex-1 bg-white/[0.07]"></span>
+            </div>
+
+            <div class="flex flex-col gap-3.5">
+
+              <!-- Activity Card 1: Head of Staff Support (Crown / Flag Icon) -->
+              <article class="activity-card">
+                <div class="activity-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 6l5 5 5-7 5 7 5-5v13H2V6z"/>
+                    <path d="M2 19h20"/>
+                  </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h3 class="text-sm font-semibold text-white">Head of Staff Support</h3>
+                    <span class="mono text-[10px] text-violet-300">2024 — 2025</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-5 text-zinc-400">
+                    Directed logistics, welfare, and team operations for major faculty camps at IT KMITL.
+                  </p>
+                  <div class="mt-2.5 flex flex-wrap gap-1.5">
+                    <span class="activity-pill">🚩 ITCAMP 20</span>
+                    <span class="activity-pill">🚩 IT TOBE 2024</span>
+                    <span class="activity-pill">IT KMITL</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Activity Card 2: Football Champion (Soccer / Trophy Icon) -->
+              <article class="activity-card">
+                <div class="activity-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polygon points="12 7 15.5 9.5 14.2 13.8 9.8 13.8 8.5 9.5 12 7"/>
+                    <path d="M12 2v5M21.5 9l-6 .5M18 20l-3.8-6.2M6 20l3.8-6.2M2.5 9l6 .5"/>
+                  </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h3 class="text-sm font-semibold text-white">3x Football Champion &amp; Athlete</h3>
+                    <span class="mono text-[10px] text-cyan-300">2024 — 2026</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-5 text-zinc-400">
+                    Three-time consecutive champion in inter-university IT tournaments and faculty competitions.
+                  </p>
+                  <div class="mt-2.5 flex flex-wrap gap-1.5">
+                    <span class="activity-pill">🏆 3x Champ — Football IT3K (2024–2026)</span>
+                    <span class="activity-pill">🥉 3rd Place — Kaesad 2025</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Activity Card 3: Camp Staff Support (Flag / Team Icon) -->
+              <article class="activity-card">
+                <div class="activity-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                    <line x1="4" y1="22" x2="4" y2="15"/>
+                  </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h3 class="text-sm font-semibold text-white">Camp Staff Support</h3>
+                    <span class="mono text-[10px] text-violet-300">IT KMITL</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-5 text-zinc-400">
+                    Facilitated freshman orientation activities, team coordination, and participant support.
+                  </p>
+                  <div class="mt-2.5 flex flex-wrap gap-1.5">
+                    <span class="activity-pill">🤝 UNITE CAMP V</span>
+                    <span class="activity-pill">Team Operations</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Activity Card 4: Content Creator (Play / Camera Icon) -->
+              <article class="activity-card">
+                <div class="activity-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="4"/>
+                    <polygon points="10 9 15 12 10 15 10 9" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h3 class="text-sm font-semibold text-white">Short-Form Video &amp; Content Creator</h3>
+                    <span class="mono text-[10px] text-pink-300">TIKTOK</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-5 text-zinc-400">
+                    Producing, editing, and publishing engaging lifestyle and creative video content.
+                  </p>
+                  <div class="mt-2.5 flex flex-wrap gap-1.5">
+                    <span class="activity-pill">🎬 TikTok: มิ้นท์ช็อคอีสเดอะเบส</span>
+                    <span class="activity-pill">Video Editing</span>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" data-theme="dark" class="relative overflow-hidden border-t border-white/[0.06] py-32">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(139,92,246,.13),transparent_60%)]"></div>
+
+      <div class="container-main relative text-center reveal">
+        <p class="mono mb-5 text-xs tracking-[.2em] text-violet-300">05 / GET IN TOUCH</p>
+        <h2 class="mx-auto max-w-3xl text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
+          Let's create something
+          <span class="gradient-text"> meaningful.</span>
+        </h2>
+        <p class="mx-auto mt-7 max-w-lg text-sm leading-7 text-zinc-400 sm:text-base">
+          Have an interesting project, an opportunity, or just want to exchange ideas?
+          My inbox is always open.
+        </p>
+
+        <a href="mailto:piyathanee.mos@gmail.com" class="btn-primary mt-10 inline-flex rounded-full px-8 py-4 text-sm font-semibold">
+          Say Hello ↗
+        </a>
+
+        <div class="mx-auto mt-12 flex max-w-sm items-center justify-center gap-3">
+          <span id="email-address" class="text-sm text-zinc-400">piyathanee.mos@gmail.com</span>
+          <button id="copy-email" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-zinc-300 transition hover:border-violet-400/50 hover:text-white" aria-label="Copy email address">
+            Copy
+          </button>
+        </div>
+        <p id="copy-feedback" class="mt-2 h-4 text-xs text-emerald-300" aria-live="polite"></p>
+
+        <div class="mt-14 flex flex-wrap justify-center gap-8 text-sm">
+          <a href="mailto:piyathanee.mos@gmail.com" class="text-zinc-500 transition hover:text-white">Email ↗</a>
+          <a href="tel:0951621114" class="text-zinc-500 transition hover:text-white">Tel: 095-162-1114 ↗</a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="text-zinc-500 transition hover:text-white">TikTok: มิ้นท์ช็อคอีสเดอะเบส ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/[0.06] py-8">
+    <div class="container-main flex flex-col items-center justify-between gap-4 text-xs text-zinc-600 sm:flex-row">
+      <p>© <span id="year"></span> Piyathanee Srithong. Designed & built with intention.</p>
+      <a href="#home" class="transition hover:text-white">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- PROJECT CASE STUDY MODAL -->
+  <div id="project-modal" class="modal-backdrop fixed inset-0 z-[100] hidden items-center justify-center overflow-y-auto p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content my-auto w-full max-w-xl rounded-2xl border border-white/10 bg-[#131316] p-7 shadow-2xl sm:p-9">
+      <div class="mb-8 flex items-center justify-between">
+        <span class="mono text-[10px] tracking-widest text-violet-300">PROJECT CASE STUDY</span>
+        <button id="modal-close" class="rounded-full border border-white/10 px-3 py-2 text-sm text-zinc-400 hover:text-white" aria-label="Close project details">✕</button>
+      </div>
+      <h3 id="modal-title" class="text-2xl font-semibold"></h3>
+      <p id="modal-description" class="mt-5 text-sm leading-8 text-zinc-400"></p>
+      <div class="mt-8">
+        <h4 class="mb-3 text-xs font-semibold text-white">THE CHALLENGE</h4>
+        <p id="modal-challenge" class="text-sm leading-7 text-zinc-500"></p>
+      </div>
+      <div class="mt-6">
+        <h4 class="mb-3 text-xs font-semibold text-white">THE SOLUTION</h4>
+        <p id="modal-solution" class="text-sm leading-7 text-zinc-500"></p>
+      </div>
+      <div class="mt-8 border-t border-white/10 pt-5">
+        <p class="mono text-[10px] text-zinc-500">TECHNOLOGIES</p>
+        <div id="modal-tags" class="mt-3 flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    // ======================================
+    // PORTFOLIO INTERACTIONS
+    // ======================================
+
+    // 1. Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 2. Mobile navigation
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      menuToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // 3. Scroll reveal animation (with automatic per-section stagger)
+    document.querySelectorAll('main > section').forEach(section => {
+      section.querySelectorAll('.reveal').forEach((el, idx) => {
+        el.style.transitionDelay = `${idx * 90}ms`;
+      });
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      revealElements.forEach(el => observer.observe(el));
+    } else {
+      revealElements.forEach(el => el.classList.add('visible'));
+    }
+
+    // 4. Project filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(btn => {
+          const active = btn === button;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', String(active));
+        });
+
+        projectCards.forEach(card => {
+          const matches = filter === 'all' || card.dataset.category === filter;
+          card.hidden = !matches;
+        });
+      });
+    });
+
+    // 5. Project case study data
+    const projects = [
+      {
+        title: 'IT Connect',
+        description: 'A faculty mobile app and web-based admin panel developed as a Senior Project to centralize student services and staff administration.',
+        challenge: 'Students and faculty staff needed a unified platform to track activity hours, apply for scholarships, receive news updates, and manage official documents.',
+        solution: 'Developed a cross-platform mobile app using Flutter for students and a web-based admin panel for staff to manage content, user data, and system operations efficiently.',
+        tags: ['Flutter', 'Dart', 'Mobile App', 'Web Admin Panel']
+      },
+      {
+        title: 'Store2hand Shirt',
+        description: 'A second-hand clothing marketplace website enabling users to buy, sell, and manage pre-loved apparel listings.',
+        challenge: 'Creating a trustworthy and easy-to-use platform where sellers can upload product images, manage inventory, and interact with buyers securely.',
+        solution: 'Implemented core marketplace features using Django, including user authentication, product image uploads, listing management, and relational database integration.',
+        tags: ['Django', 'Python', 'Authentication', 'Full-Stack']
+      },
+      {
+        title: 'Panda Shabu',
+        description: 'A digital ordering and menu management web application tailored for a shabu restaurant.',
+        challenge: 'Manual order taking caused delays and inaccuracies during peak hours, requiring a streamlined digital ordering workflow.',
+        solution: 'Built a PHP-based ordering system allowing customers to place orders directly and staff to manage menus and process orders accurately in the backend.',
+        tags: ['PHP', 'MySQL', 'Backend', 'Order System']
+      },
+      {
+        title: 'Catch Coin Market (POS)',
+        description: 'A Point of Sale (POS) application structured around the Model-View-Controller (MVC) design pattern.',
+        challenge: 'Retail operations required a structured, maintainable application to handle checkout transactions and track stock levels reliably.',
+        solution: 'Developed a Java POS system using MVC architecture, implementing core modules for sales processing and inventory management.',
+        tags: ['Java', 'MVC Architecture', 'POS', 'Inventory Management']
+      }
+    ];
+
+    // 6. Modal
+    const modal = document.getElementById('project-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalChallenge = document.getElementById('modal-challenge');
+    const modalSolution = document.getElementById('modal-solution');
+    const modalTags = document.getElementById('modal-tags');
+    const modalClose = document.getElementById('modal-close');
+
+    let lastFocusedElement = null;
+
+    window.openProject = function(index) {
+      const project = projects[index];
+      if (!project) return;
+
+      lastFocusedElement = document.activeElement;
+      modalTitle.textContent = project.title;
+      modalDescription.textContent = project.description;
+      modalChallenge.textContent = project.challenge;
+      modalSolution.textContent = project.solution;
+
+      modalTags.replaceChildren();
+
+      project.tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'skill-pill rounded-full px-3 py-2 text-xs';
+        span.textContent = tag;
+        modalTags.appendChild(span);
+      });
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    };
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      if (lastFocusedElement) lastFocusedElement.focus();
+    }
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', event => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // 7. Copy email to clipboard
+    const copyButton = document.getElementById('copy-email');
+    const emailAddress = document.getElementById('email-address');
+    const copyFeedback = document.getElementById('copy-feedback');
+
+    copyButton.addEventListener('click', async () => {
+      const email = emailAddress.textContent.trim();
+
+      try {
+        await navigator.clipboard.writeText(email);
+        copyFeedback.textContent = 'Email copied successfully!';
+        copyButton.textContent = 'Copied ✓';
+      } catch (error) {
+        copyFeedback.textContent = 'Unable to copy. Please select the email manually.';
+      }
+
+      setTimeout(() => {
+        copyFeedback.textContent = '';
+        copyButton.textContent = 'Copy';
+      }, 2500);
+    });
+
+    // 8. Active navigation state
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if ('IntersectionObserver' in window) {
+      const navObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              const active = link.getAttribute('href') === '#' + entry.target.id;
+              link.classList.toggle('active', active);
+            });
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+
+      sections.forEach(section => navObserver.observe(section));
+    }
+
+    // 9. Section themes
+    // Sections 2 (About) & 4 (Projects) use the light theme, the rest stay dark.
+    // The data-theme attributes are also set statically in the HTML so the
+    // first paint is correct before this script runs.
+    const themeSections = [
+      { id: 'home',       theme: 'dark'  },
+      { id: 'about',      theme: 'light' },
+      { id: 'skills',     theme: 'dark'  },
+      { id: 'projects',   theme: 'light' },
+      { id: 'experience', theme: 'dark'  },
+      { id: 'contact',    theme: 'dark'  }
+    ];
+
+    const navbar = document.querySelector('header');
+
+    const themedSections = themeSections
+      .map(({ id, theme }) => {
+        const section = document.getElementById(id);
+        if (section) section.dataset.theme = theme;
+        return section;
+      })
+      .filter(Boolean);
+
+    // Switch the navbar/body theme based on the section under the navbar
+    function updateTheme() {
+      const probe = (navbar ? navbar.offsetHeight : 72) + 1;
+      const current = themedSections.find(section => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= probe && rect.bottom > probe;
+      }) || themedSections[0];
+
+      const theme = current ? current.dataset.theme : 'dark';
+
+      if (document.body.dataset.theme !== theme) document.body.dataset.theme = theme;
+      navbar?.classList.toggle('nav-light', theme === 'light');
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateTheme();
+        ticking = false;
+      });
+    }, { passive: true });
+    window.addEventListener('resize', updateTheme);
+    updateTheme();
+
+    // 10. Custom Smooth Section Snapping (EaseInOutQuart + Conflict-Free)
+    let isScrolling = false;
+    let scrollRafId = null;
+
+    // Silky easeInOutQuart curve: gentle start, fluid glide, soft landing
+    function easeInOutQuart(t) {
+      return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    }
+
+    function snapToSection(target, duration = 820) {
+      if (!target) return;
+      const htmlEl = document.documentElement;
+      const startY = window.scrollY;
+      const targetY = Math.round(startY + target.getBoundingClientRect().top);
+
+      if (Math.abs(targetY - startY) < 2) return;
+
+      if (scrollRafId) cancelAnimationFrame(scrollRafId);
+      isScrolling = true;
+
+      // Temporarily pause CSS scroll-snap & smooth behavior so the browser
+      // doesn't fight our custom easing frame-by-frame
+      htmlEl.style.scrollSnapType = 'none';
+      htmlEl.style.scrollBehavior = 'auto';
+
+      // Trigger navbar theme transition immediately in sync with the glide
+      const targetTheme = target.dataset.theme;
+      if (targetTheme) {
+        document.body.dataset.theme = targetTheme;
+        navbar?.classList.toggle('nav-light', targetTheme === 'light');
+      }
+
+      const startTime = performance.now();
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeInOutQuart(progress);
+
+        window.scrollTo(0, startY + (targetY - startY) * eased);
+
+        if (progress < 1) {
+          scrollRafId = requestAnimationFrame(step);
+        } else {
+          window.scrollTo(0, targetY);
+          htmlEl.style.scrollSnapType = '';
+          htmlEl.style.scrollBehavior = '';
+          updateTheme();
+          // Brief settle buffer to absorb trackpad momentum tail
+          setTimeout(() => {
+            isScrolling = false;
+          }, 120);
+        }
+      }
+
+      scrollRafId = requestAnimationFrame(step);
+    }
+
+    // Also make navbar & hero anchor clicks use the same silky glide
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const id = anchor.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          snapToSection(target, 860);
+        }
+      });
+    });
+
+    window.addEventListener('wheel', (e) => {
+      // Do not hijack scroll when project modal is open or user zooms
+      if (!modal.classList.contains('hidden') || e.ctrlKey || Math.abs(e.deltaY) < 6) return;
+
+      if (isScrolling) {
+        e.preventDefault();
+        return;
+      }
+
+      const vh = window.innerHeight;
+      const homeEl = document.getElementById('home');
+      const aboutEl = document.getElementById('about');
+
+      // Guaranteed transition between #home (Dark) and #about (Light)
+      if (homeEl && aboutEl) {
+        const homeRect = homeEl.getBoundingClientRect();
+        const aboutRect = aboutEl.getBoundingClientRect();
+
+        // Viewing #home and scrolling down -> snap directly to #about
+        if (e.deltaY > 0 && homeRect.top <= 10 && homeRect.bottom > vh * 0.25) {
+          e.preventDefault();
+          snapToSection(aboutEl);
+          return;
+        }
+
+        // At the top of #about and scrolling up -> snap directly to #home
+        if (e.deltaY < 0 && aboutRect.top >= -20 && aboutRect.top < vh * 0.75) {
+          e.preventDefault();
+          snapToSection(homeEl);
+          return;
+        }
+      }
+
+      // Snap across other full-viewport sections when at section boundaries
+      const currentIdx = themedSections.findIndex(sec => {
+        const r = sec.getBoundingClientRect();
+        return r.top <= vh * 0.35 && r.bottom > vh * 0.35;
+      });
+
+      if (currentIdx === -1) return;
+      const currentSec = themedSections[currentIdx];
+      const rect = currentSec.getBoundingClientRect();
+
+      if (e.deltaY > 0 && currentIdx < themedSections.length - 1) {
+        const atBottom = rect.bottom <= vh + 10;
+        if (atBottom) {
+          e.preventDefault();
+          snapToSection(themedSections[currentIdx + 1]);
+        }
+      } else if (e.deltaY < 0 && currentIdx > 0) {
+        const atTop = rect.top >= -10;
+        if (atTop) {
+          e.preventDefault();
+          snapToSection(themedSections[currentIdx - 1]);
+        }
+      }
+    }, { passive: false });
+
+    // 11. Interactive Split-Screen Cursor Wipe (Dual-Persona Portrait)
+    const dualPersona = document.getElementById('dual-persona');
+    const homeSection = document.getElementById('home');
+
+    if (dualPersona) {
+      let targetSplit = 50;
+      let currentSplit = 50;
+      let splitRaf = null;
+      let isPointerInside = false;
+
+      function renderSplit() {
+        const diff = targetSplit - currentSplit;
+        if (Math.abs(diff) > 0.08) {
+          currentSplit += diff * 0.16;
+          dualPersona.style.setProperty('--split', `${currentSplit.toFixed(2)}%`);
+          homeSection?.style.setProperty('--hero-split', (currentSplit / 100).toFixed(3));
+          splitRaf = requestAnimationFrame(renderSplit);
+        } else {
+          currentSplit = targetSplit;
+          dualPersona.style.setProperty('--split', `${currentSplit.toFixed(2)}%`);
+          homeSection?.style.setProperty('--hero-split', (currentSplit / 100).toFixed(3));
+          splitRaf = null;
+        }
+      }
+
+      function setSplitFromClientX(clientX) {
+        const rect = dualPersona.getBoundingClientRect();
+        const raw = ((clientX - rect.left) / rect.width) * 100;
+        targetSplit = Math.max(6, Math.min(94, raw));
+        if (!splitRaf) splitRaf = requestAnimationFrame(renderSplit);
+      }
+
+      dualPersona.addEventListener('pointerenter', (e) => {
+        isPointerInside = true;
+        setSplitFromClientX(e.clientX);
+      });
+
+      dualPersona.addEventListener('pointermove', (e) => {
+        if (!isPointerInside && e.pointerType === 'mouse') isPointerInside = true;
+        setSplitFromClientX(e.clientX);
+      });
+
+      dualPersona.addEventListener('pointerdown', (e) => {
+        isPointerInside = true;
+        setSplitFromClientX(e.clientX);
+      });
+
+      dualPersona.addEventListener('pointerleave', () => {
+        isPointerInside = false;
+        targetSplit = 50;
+        if (!splitRaf) splitRaf = requestAnimationFrame(renderSplit);
+      });
+    }
+
+    // 12. Scroll-Triggered Number Counter Animation (About Stats)
+    const countElements = document.querySelectorAll('.count-up');
+
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target || '0', 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = parseInt(el.dataset.duration || '1600', 10);
+      const startTime = performance.now();
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutExpo for a fast initial spin and smooth deceleration at the target
+        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        const current = Math.round(target * eased);
+        el.textContent = `${current}${suffix}`;
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = `${target}${suffix}`;
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    if ('IntersectionObserver' in window && countElements.length > 0) {
+      const countObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      countElements.forEach(el => countObserver.observe(el));
+    } else {
+      countElements.forEach(el => {
+        el.textContent = `${el.dataset.target || '0'}${el.dataset.suffix || ''}`;
+      });
+    }
+
+    // 13. About Section: Interactive "Code vs. Design" Toggle & Smooth Height Morph
+    const aboutToggle = document.getElementById('about-toggle');
+    const aboutStage = document.getElementById('about-stage');
+    const panelDesign = document.getElementById('about-panel-design');
+    const panelCode = document.getElementById('about-panel-code');
+
+    if (aboutToggle && aboutStage && panelDesign && panelCode) {
+      let currentAboutView = 'design';
+      let heightTimer = null;
+
+      function switchAboutView(nextView) {
+        if (nextView === currentAboutView) return;
+
+        const outgoing = currentAboutView === 'design' ? panelDesign : panelCode;
+        const incoming = nextView === 'design' ? panelDesign : panelCode;
+
+        // 1. Lock current height before swapping
+        const startHeight = outgoing.offsetHeight;
+        aboutStage.style.height = `${startHeight}px`;
+
+        // 2. Update segmented toggle UI & ARIA states
+        currentAboutView = nextView;
+        aboutToggle.dataset.active = nextView;
+        aboutToggle.querySelectorAll('.about-seg-btn').forEach(btn => {
+          const isSelected = btn.dataset.view === nextView;
+          btn.setAttribute('aria-selected', String(isSelected));
+        });
+
+        // 3. Crossfade + 3D perspective flip between panels
+        outgoing.classList.remove('is-active');
+        outgoing.classList.add('is-inactive');
+        outgoing.setAttribute('aria-hidden', 'true');
+
+        incoming.classList.remove('is-inactive');
+        incoming.classList.add('is-active');
+        incoming.setAttribute('aria-hidden', 'false');
+
+        // 4. Measure target height and animate smoothly
+        const targetHeight = incoming.offsetHeight;
+        requestAnimationFrame(() => {
+          aboutStage.style.height = `${targetHeight}px`;
+        });
+
+        // Re-trigger number counter flourish when returning to Design view
+        if (nextView === 'design') {
+          panelDesign.querySelectorAll('.count-up').forEach(el => animateCounter(el));
+        }
+
+        clearTimeout(heightTimer);
+        heightTimer = setTimeout(() => {
+          aboutStage.style.height = '';
+        }, 540);
+      }
+
+      aboutToggle.querySelectorAll('.about-seg-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.dataset.view;
+          if (view) switchAboutView(view);
+        });
+      });
+    }
+
+  </script>
+</body>
+</html>
